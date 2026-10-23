@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Girişi | Sahra Kahvesi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a372c;
+            --primary-dark: #33251c;
+            --accent: #b08d57;
+            --accent-hover: #967545;
+            --accent-light: #fff5e6;
+            --bg-light: #e3cca9;
+            --white: #eedbbd;
+            --text-dark: #3a2b22;
+            --gray: #6b5344;
+            --border-color: rgba(110, 83, 64, 0.2);
+            --transition: all 0.3s ease;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+        }
+
+        .login-card { 
+            background: var(--white); 
+            padding: 2rem; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+            border: 1px solid var(--border-color); 
+            width: 100%; 
+            max-width: 400px; 
+        }
+
+        .login-header { 
+            text-align: center; 
+            margin-bottom: 1.5rem; 
+        }
+
+        .login-header h2 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.6rem; 
+            color: var(--primary); 
+            margin-top: 0.5rem; 
+        }
+
+        .form-group { 
+            margin-bottom: 1rem; 
+        }
+
+        label { 
+            display: block; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            color: var(--primary); 
+            margin-bottom: 0.4rem; 
+        }
+
+        input { 
+            width: 100%; 
+            background: var(--bg-light); 
+            border: 1px solid var(--border-color); 
+            padding: 0.7rem 0.9rem; 
+            border-radius: 10px; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-size: 0.9rem; 
+            color: var(--text-dark); 
+            outline: none; 
+            transition: var(--transition); 
+        }
+
+        input:focus { 
+            border-color: var(--accent); 
+            background: #f4e8d3; 
+        }
+
+        .submit-btn { 
+            background-color: var(--primary); 
+            color: var(--accent-light); 
+            width: 100%; 
+            padding: 0.8rem; 
+            border-radius: 10px; 
+            border: none; 
+            font-weight: 700; 
+            font-size: 0.9rem; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            margin-top: 0.5rem; 
+        }
+
+        .submit-btn:hover { 
+            background-color: var(--primary-dark); 
+        }
+
+        .action-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            font-size: 0.82rem;
+        }
+
+        .action-links a, .action-links button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: var(--transition);
+        }
+
+        .action-links a:hover, .action-links button:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* Modal Tasarımı */
+        #passwordModal {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            z-index: 9999; 
+            justify-content: center; 
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--white); 
+            padding: 1.5rem; 
+            border-radius: 16px; 
+            width: 90%; 
+            max-width: 380px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif; 
+            color: var(--primary); 
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fa-solid fa-mug-hot" style="font-size: 2rem; color: var(--accent);"></i>
+            <h2>Sahra Kahvesi</h2>
+            <p style="font-size: 0.82rem; color: var(--gray);">Yönetici Paneli Girişi</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="adminEmail">Yönetici E-posta</label>
+                <input type="email" id="adminEmail" required placeholder="admin@sahrakahvesi.com">
+            </div>
+
+            <div class="form-group">
+                <label for="adminPassword">Yönetici Şifresi</label>
+                <input type="password" id="adminPassword" required placeholder="Şifrenizi girin">
+            </div>
+
+            <button type="submit" class="submit-btn">Giriş Yap</button>
+
+            <div class="action-links">
+                <a href="sepet.html"><i class="fa-solid fa-arrow-left"></i> Siteye Dön</a>
+                <button type="button" id="openModalBtn"><i class="fa-solid fa-key"></i> Şifreyi Değiştir</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Şifre Değiştirme Modalı -->
+    <div id="passwordModal">
+        <div class="modal-content">
+            <h3>Yönetici Şifresini Değiştir</h3>
+            <p style="font-size: 0.8rem; color: var(--gray); margin-bottom: 1rem;">Mevcut bilgilerinizi girerek şifrenizi güncelleyin.</p>
+            
+            <div class="form-group">
+                <label for="changeEmail">E-posta Adresiniz</label>
+                <input type="email" id="changeEmail" placeholder="admin@sahrakahvesi.com">
+            </div>
+
+            <div class="form-group">
+                <label for="currentPassword">Mevcut Şifre</label>
+                <input type="password" id="currentPassword" placeholder="Eski şifrenizi girin">
+            </div>
+
+            <div class="form-group">
+                <label for="newPassword">Yeni Şifre</label>
+                <input type="password" id="newPassword" placeholder="Yeni şifreniz (en az 6 karakter)">
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button type="button" id="saveNewPassBtn" class="submit-btn" style="margin-top:0;">Şifreyi Güncelle</button>
+                <button type="button" id="closeModalBtn" style="flex:1; background:#d4bda2; color:var(--text-dark); border:none; border-radius:10px; font-weight:700; cursor:pointer;">İptal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK ve Mantık -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signInWithEmailAndPassword as reauth, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC20egq_Y_zevNuZKwMOnYM14a_z1d9FXk",
+            authDomain: "sahra-kahvesi.firebaseapp.com",
+            projectId: "sahra-kahvesi",
+            storageBucket: "sahra-kahvesi.firebasestorage.app",
+            messagingSenderId: "523862673240",
+            appId: "1:523862673240:web:a46e822a876acb7010872d",
+            measurementId: "G-C3ZTV3NTWW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const loginForm = document.getElementById("loginForm");
+            const modal = document.getElementById("passwordModal");
+            const openModalBtn = document.getElementById("openModalBtn");
+            const closeModalBtn = document.getElementById("closeModalBtn");
+            const saveNewPassBtn = document.getElementById("saveNewPassBtn");
+
+            // --- GİRİŞ YAPMA İŞLEMİ ---
+            loginForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const email = document.getElementById("adminEmail").value;
+                const password = document.getElementById("adminPassword").value;
+
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    window.location.href = "admin.html";
+                } catch (error) {
+                    alert("Giriş başarısız! E-posta veya şifre hatalı. Hata: " + error.message);
+                }
+            });
+
+            // --- MODAL AÇ / KAPAT ---
+            openModalBtn.addEventListener("click", () => {
+                modal.style.display = "flex";
+            });
+
+            closeModalBtn.addEventListener("click", () => {
+                modal.style.display = "none";
+                document.getElementById("changeEmail").value = "";
+                document.getElementById("currentPassword").value = "";
+                document.getElementById("newPassword").value = "";
+            });
+
+            // --- MEVZU ŞİFREYİ DOĞRULAYIP YENİSİYLE DEĞİŞTİRME ---
+            saveNewPassBtn.addEventListener("click", async () => {
+                const email = document.getElementById("changeEmail").value;
+                const currentPassword = document.getElementById("currentPassword").value;
+                const newPassword = document.getElementById("newPassword").value;
+
+                if (!email || !currentPassword || !newPassword) {
+                    alert("Lütfen tüm alanları doldurun.");
+                    return;
+                }
+
+                if (newPassword.length < 6) {
+                    alert("Yeni şifre güvenlik gereği en az 6 karakter olmalıdır.");
+                    return;
+                }
+
+                try {
+                    // 1. Adım: Eski e-posta ve mevcut şifre ile kullanıcıyı geçici olarak oturum açtırıp doğruluyoruz (Re-auth)
+                    const userCredential = await signInWithEmailAndPassword(auth, email, currentPassword);
+                    const user = userCredential.user;
+
+                    // 2. Adım: Doğrulama başarılıysa yeni şifreyi Firebase'e kaydediyoruz
+                    await updatePassword(user, newPassword);
+
+                    alert("Şifreniz başarıyla değiştirildi! Yeni şifrenizle giriş yapabilirsiniz.");
+                    
+                    // Modalı kapat ve alanları temizle
+                    modal.style.display = "none";
+                    document.getElementById("changeEmail").value = "";
+                    document.getElementById("currentPassword").value = "";
+                    document.getElementById("newPassword").value = "";
+                } catch (error) {
+                    alert("Şifre değiştirilemedi! Girdiğiniz mevcut e-posta veya şifre yanlış olabilir. Hata: " + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

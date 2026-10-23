@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Yönetici Paneli | Sahra Kahvesi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Sayfa açılır açılmaz yetki kontrolü -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC20egq_Y_zevNuZKwMOnYM14a_z1d9FXk",
+            authDomain: "sahra-kahvesi.firebaseapp.com",
+            projectId: "sahra-kahvesi",
+            storageBucket: "sahra-kahvesi.firebasestorage.app",
+            messagingSenderId: "523862673240",
+            appId: "1:523862673240:web:a46e822a876acb7010872d",
+            measurementId: "G-C3ZTV3NTWW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.replace("admin-login.html");
+            }
+        });
+    </script>
+
+    <style>
+        :root {
+            --primary: #4a372c;
+            --primary-dark: #33251c;
+            --accent: #b08d57;
+            --accent-light: #fff5e6;
+            --bg-light: #e3cca9;
+            --card-inner: #d9c29d;
+            --white: #eedbbd;
+            --text-dark: #3a2b22;
+            --gray: #6b5344;
+            --border-color: rgba(110, 83, 64, 0.25);
+            --transition: all 0.3s ease;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light) !important; color: var(--text-dark); line-height: 1.4; overflow-x: hidden; width: 100%; }
+
+        header { background-color: var(--white); padding: 0.8rem 3%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; width: 100%; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+        .logo img { width: 24px; height: 24px; object-fit: contain; border-radius: 50%; }
+
+        .container { max-width: 1050px; margin: 1rem auto; padding: 0 0.5rem; width: 100%; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--primary); margin-bottom: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+
+        .admin-grid { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
+        .admin-card { background: var(--white); border-radius: 12px; padding: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid var(--border-color); width: 100%; overflow: hidden; }
+        
+        .list-card-item { background: var(--card-inner); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.8rem; margin-bottom: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .list-card-item:last-child { margin-bottom: 0; }
+        
+        .card-row { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px dashed rgba(74, 55, 44, 0.2); padding-bottom: 0.4rem; font-size: 0.82rem; }
+        .card-row:last-child { border-bottom: none; padding-bottom: 0; }
+        
+        .badge { padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; display: inline-block; }
+        .badge.success { background: #27ae60; color: #fff; }
+        .badge.pending { background: #d35400; color: #fff; }
+
+        .btn { background-color: var(--primary); color: var(--accent-light); border: none; padding: 0.35rem 0.7rem; border-radius: 6px; font-weight: 700; font-size: 0.75rem; cursor: pointer; transition: var(--transition); display: inline-block; text-decoration: none; text-align: center; }
+        .btn:hover { background-color: var(--primary-dark); }
+        .btn-success { background-color: #27ae60; color: white; width: 100%; padding: 0.4rem; text-align: center; margin-bottom: 0.3rem; }
+        .btn-success:hover { background-color: #1e8449; }
+        .btn-danger { background-color: #a93226; color: white; padding: 0.4rem; font-size: 0.75rem; border-radius: 6px; border: none; cursor: pointer; width: 100%; text-align: center; }
+        
+        .empty-text { color: var(--gray); font-size: 0.85rem; text-align: center; padding: 1rem; }
+        input { font-size: 16px !important; background: #fff !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">
+            <img src="logo1.jpg" alt="Sahra Kahvesi"> Sahra - Admin
+        </a>
+        <div style="display: flex; gap: 0.6rem; align-items: center;">
+            <a href="index.html" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.78rem; white-space: nowrap;"><i class="fa-solid fa-store"></i> Siteye Dön</a>
+            <button id="logoutBtn" class="btn-danger" style="width: auto; padding: 0.25rem 0.5rem; font-size: 0.72rem;"><i class="fa-solid fa-right-from-bracket"></i> Çıkış</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="admin-grid">
+            
+            <!-- Ürün Fiyatı ve Bilgi Yönetimi -->
+            <div class="admin-card">
+                <div class="section-title"><i class="fa-solid fa-tags"></i> Ürün Fiyat & Bilgi Yönetimi</div>
+                <form id="productUpdateForm" style="display: flex; flex-direction: column; gap: 0.7rem; font-size: 0.82rem;">
+                    <div>
+                        <label style="font-weight: 700; color: var(--primary); display: block; margin-bottom: 0.15rem;">Ürün Adı</label>
+                        <input type="text" id="adminProductName" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border-color); border-radius: 8px;" required>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+                        <div>
+                            <label style="font-weight: 700; color: var(--primary); display: block; margin-bottom: 0.15rem;">250g Fiyat (₺)</label>
+                            <input type="number" id="adminPrice250" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border-color); border-radius: 8px;" required>
+                        </div>
+                        <div>
+                            <label style="font-weight: 700; color: var(--primary); display: block; margin-bottom: 0.15rem;">250g İndirimsiz</label>
+                            <input type="number" id="adminOriginal250" placeholder="Çizilmez" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border-color); border-radius: 8px;">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+                        <div>
+                            <label style="font-weight: 700; color: var(--primary); display: block; margin-bottom: 0.15rem;">500g Fiyat (₺)</label>
+                            <input type="number" id="adminPrice500" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border-color); border-radius: 8px;" required>
+                        </div>
+                        <div>
+                            <label style="font-weight: 700; color: var(--primary); display: block; margin-bottom: 0.15rem;">500g İndirimsiz</label>
+                            <input type="number" id="adminOriginal500" placeholder="Çizilmez" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border-color); border-radius: 8px;">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+                        <div>
+                            <label style="font-weight: 700; color: var(--primary); display: block; margin-bottom: 0.15rem;">1kg Fiyat (₺)</label>
+                            <input type="number" id="adminPrice1kg" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border-color); border-radius: 8px;" required>
+                        </div>
+                        <div>
+                            <label style="font-weight: 700; color: var(--primary); display: block; margin-bottom: 0.15rem;">1kg İndirimsiz</label>
+                            <input type="number" id="adminOriginal1kg" placeholder="Çizilmez" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border-color); border-radius: 8px;">
+                        </div>
+                    </div>
+
+                    <!-- Kampanya Fiyatları Yönetimi -->
+                    <div style="border-top: 1px dashed var(--border-color); padding-top: 0.6rem; margin-top: 0.2rem;">
+                        <span style="font-weight: 700; color: var(--primary); display: block; margin-bottom: 0.4rem; font-size: 0.85rem;"><i class="fa-solid fa-fire"></i> Kampanya Paket Fiyatları (₺)</span>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+                            <div>
+                                <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 0.15rem; font-size: 0.75rem;">2 KG Kampanya Fiyatı</label>
+                                <input type="number" id="adminCampaign2kg" placeholder="2600" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border-color); border-radius: 8px;" required>
+                            </div>
+                            <div>
+                                <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 0.15rem; font-size: 0.75rem;">3 KG Kampanya Fiyatı</label>
+                                <input type="number" id="adminCampaign3kg" placeholder="3600" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border-color); border-radius: 8px;" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" style="margin-top: 0.3rem; padding: 0.55rem; text-align: center;"><i class="fa-solid fa-floppy-disk"></i> Değişiklikleri Kaydet</button>
+                </form>
+            </div>
+
+            <!-- Müşteri İletişim Bilgileri & Excel İndirme Alanı -->
+            <div class="admin-card">
+                <div class="section-title"><i class="fa-solid fa-address-book"></i> Müşteri İletişim Listesi</div>
+                <p style="font-size: 0.8rem; color: var(--gray); margin-bottom: 0.8rem;">Sipariş veren kullanıcıların telefon ve e-posta bilgileri aşağıda listelenir.</p>
+                
+                <button id="downloadCsvBtn" class="btn" style="background-color: #27ae60; width: 100%; margin-bottom: 0.8rem; padding: 0.5rem; text-align: center;">
+                    <i class="fa-solid fa-download"></i> Bilgileri Excel (CSV) Olarak İndir
+                </button>
+
+                <div style="max-height: 250px; overflow-y: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.78rem; text-align: left;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border-color); color: var(--primary);">
+                                <th style="padding: 0.4rem;">Ad Soyad</th>
+                                <th style="padding: 0.4rem;">Telefon</th>
+                                <th style="padding: 0.4rem;">E-posta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTableBody">
+                            <!-- JS ile dinamik dolacak -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 1. Gelen Siparişler -->
+            <div class="admin-card">
+                <div class="section-title"><i class="fa-solid fa-box-open"></i> Gelen Siparişler & Ödeme Takibi</div>
+                <div id="ordersContainer">
+                    <!-- JS ile dinamik kartlar dolacak -->
+                </div>
+            </div>
+
+            <!-- 2. Müşteri Yorumları -->
+            <div class="admin-card">
+                <div class="section-title"><i class="fa-solid fa-comments"></i> Müşteri Yorumları</div>
+                <div id="reviewsContainer">
+                    <!-- JS ile dinamik yorum kartları dolacak -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+  import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC20egq_Y_zevNuZKwMOnYM14a_z1d9FXk",
+    authDomain: "sahra-kahvesi.firebaseapp.com",
+    projectId: "sahra-kahvesi",
+    storageBucket: "sahra-kahvesi.firebasestorage.app",
+    messagingSenderId: "523862673240",
+    appId: "1:523862673240:web:a46e822a876acb7010872d",
+    measurementId: "G-C3ZTV3NTWW"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  window.db = getFirestore(app);
+
+  async function loadAdminProduct() {
+      try {
+          const querySnapshot = await getDocs(collection(window.db, "products"));
+          querySnapshot.forEach((documentSnapshot) => {
+              const product = documentSnapshot.data();
+              window.activeProductId = documentSnapshot.id;
+
+              if(document.getElementById('adminProductName')) {
+                  document.getElementById('adminProductName').value = product.name || "";
+                  document.getElementById('adminPrice250').value = product.price250 || 600;
+                  document.getElementById('adminOriginal250').value = product.original250 || "";
+                  document.getElementById('adminPrice500').value = product.price500 || 1000;
+                  document.getElementById('adminOriginal500').value = product.original500 || "";
+                  document.getElementById('adminPrice1kg').value = product.price1kg || 1700;
+                  document.getElementById('adminOriginal1kg').value = product.original1kg || "";
+                  
+                  // Kampanya fiyatlarını alanlara yükleme
+                  if(document.getElementById('adminCampaign2kg')) {
+                      document.getElementById('adminCampaign2kg').value = product.campaign2kg_price || 2600;
+                  }
+                  if(document.getElementById('adminCampaign3kg')) {
+                      document.getElementById('adminCampaign3kg').value = product.campaign3kg_price || 3600;
+                  }
+              }
+          });
+      } catch (e) {
+          console.error("Ürün verisi yüklenirken hata:", e);
+      }
+  }
+
+  document.getElementById('productUpdateForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!window.activeProductId) {
+          alert("Güncellenecek ürün ID bulunamadı!");
+          return;
+      }
+
+      try {
+          const productRef = doc(window.db, "products", window.activeProductId);
+          await updateDoc(productRef, {
+              name: document.getElementById('adminProductName').value,
+              price250: Number(document.getElementById('adminPrice250').value),
+              original250: document.getElementById('adminOriginal250').value ? document.getElementById('adminOriginal250').value : "",
+              price500: Number(document.getElementById('adminPrice500').value),
+              original500: document.getElementById('adminOriginal500').value ? document.getElementById('adminOriginal500').value : "",
+              price1kg: Number(document.getElementById('adminPrice1kg').value),
+              original1kg: document.getElementById('adminOriginal1kg').value ? document.getElementById('adminOriginal1kg').value : "",
+              campaign2kg_price: Number(document.getElementById('adminCampaign2kg').value),
+              campaign3kg_price: Number(document.getElementById('adminCampaign3kg').value)
+          });
+          alert("Ürün bilgileri ve kampanya fiyatları başarıyla Firestore'a kaydedildi!");
+      } catch (error) {
+          console.error("Güncelleme hatası:", error);
+          alert("Güncellenirken bir hata oluştu.");
+      }
+  });
+
+  loadAdminProduct();
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+          await signOut(auth);
+          window.location.href = "admin-login.html";
+      } catch (error) {
+          console.error("Çıkış yapılırken hata:", error);
+      }
+  });
+</script>
+
+    <script>
+        function loadOrders() {
+            let orders = JSON.parse(localStorage.getItem('sahra_orders')) || [];
+            const container = document.getElementById('ordersContainer');
+            container.innerHTML = "";
+
+            if (orders.length === 0) {
+                container.innerHTML = `<div class="empty-text">Henüz gelen sipariş bulunmuyor.</div>`;
+                return;
+            }
+
+            orders.forEach((order, index) => {
+                let itemsHtml = "";
+                if (order.items && order.items.length > 0) {
+                    itemsHtml = order.items.map(i => `<div style="margin-bottom:0.2rem;">• <strong>${i.name}</strong> (${i.weight || 'Standart'}) x ${i.quantity || i.qty || 1}</div>`).join('');
+                } else {
+                    itemsHtml = `<div style="color:var(--gray);">Ürün içeriği belirtilmedi</div>`;
+                }
+
+                const paymentMethod = order.paymentMethod || 'Kredi Kartı';
+                const orderStatus = order.status || 'Ödeme Başarılı';
+                const isPending = orderStatus === 'Havale Bekleniyor';
+                const badgeClass = isPending ? 'pending' : 'success';
+
+                const fullCity = order.city ? `<strong>${order.city}</strong> - ` : '';
+                const fullAddress = fullCity + (order.address || 'Belirtilmedi');
+
+                container.innerHTML += `
+                    <div class="list-card-item">
+                        <div class="card-row">
+                            <div>
+                                <strong style="font-size:0.9rem; color:var(--primary);">${order.name || 'Müşteri'}</strong><br>
+                                <span style="color:var(--gray); font-size:0.75rem;"><i class="fa-solid fa-phone"></i> ${order.phone || ''}</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <strong style="font-size:0.95rem; color:var(--primary);">${order.total || '₺1.700,00'}</strong><br>
+                                <span style="font-size:0.72rem; font-weight:600; display:block; margin-top:2px;">${paymentMethod}</span>
+                                <span class="badge ${badgeClass}" style="margin-top:2px;">${orderStatus}</span>
+                            </div>
+                        </div>
+
+                        <div class="card-row" style="flex-direction: column; gap: 0.2rem;">
+                            <span style="font-weight:700; color:var(--primary); font-size:0.78rem;"><i class="fa-solid fa-box"></i> Ürünler:</span>
+                            <div style="font-size:0.78rem; padding-left:0.3rem;">${itemsHtml}</div>
+                        </div>
+
+                        <div class="card-row" style="flex-direction: column; gap: 0.1rem; background: rgba(74, 55, 44, 0.05); padding: 0.4rem; border-radius: 6px;">
+                            <span style="font-weight:700; color:var(--primary); font-size:0.78rem;"><i class="fa-solid fa-location-dot"></i> Adres:</span>
+                            <span style="font-size:0.78rem; color:var(--text-dark);">${fullAddress}</span>
+                        </div>
+
+                        <div style="margin-top: 0.2rem;">
+                            ${isPending ? `<button class="btn btn-success" onclick="approvePayment(${index})"><i class="fa-solid fa-check"></i> Ödemeyi Onayla</button>` : ''}
+                            <button class="btn-danger" onclick="deleteOrder(${index})"><i class="fa-solid fa-trash"></i> Siparişi Sil</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function loadCustomerContacts() {
+            let orders = JSON.parse(localStorage.getItem('sahra_orders')) || [];
+            const tbody = document.getElementById('customerTableBody');
+            if(!tbody) return;
+            
+            tbody.innerHTML = "";
+            let customersList = [];
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="empty-text">Henüz kayıtlı müşteri bilgisi yok.</td></tr>`;
+                return;
+            }
+
+            orders.forEach(order => {
+                let customer = {
+                    name: order.name || 'Belirtilmemiş',
+                    phone: order.phone || 'Belirtilmemiş',
+                    email: order.email || 'Belirtilmemiş'
+                };
+                
+                customersList.push(customer);
+
+                tbody.innerHTML += `
+                    <tr style="border-bottom: 1px dashed rgba(74, 55, 44, 0.2);">
+                        <td style="padding: 0.4rem;">${customer.name}</td>
+                        <td style="padding: 0.4rem;">${customer.phone}</td>
+                        <td style="padding: 0.4rem;">${customer.email}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadOrders();
+            loadCustomerContacts();
+        });
+    </script>
+</body>
+</html>

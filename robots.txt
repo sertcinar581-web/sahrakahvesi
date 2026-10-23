@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Yönetim paneli ve giriş sayfalarını Google taramasın (Gizlilik ve Güvenlik için)
+Disallow: /admin.html
+Disallow: /admin-login.html
+
+# Site haritamızın adresi
+Sitemap: https://www.sahrakahvesi.com/sitemap.xml

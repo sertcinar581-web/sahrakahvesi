@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sepetiniz | Sahra Kahvesi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a372c;
+            --primary-dark: #33251c;
+            --accent: #b08d57;
+            --accent-hover: #967545;
+            --accent-light: #fff5e6;
+            --bg-light: #e3cca9;
+            --white: #eedbbd;
+            --text-dark: #3a2b22;
+            --gray: #6b5344;
+            --border-color: rgba(110, 83, 64, 0.2);
+            --transition: all 0.3s ease;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light) !important; color: var(--text-dark); line-height: 1.5; overflow-x: hidden; }
+
+        header { background-color: var(--bg-light) !important; backdrop-filter: blur(10px); padding: 0.8rem 4%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; width: 100%; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; }
+        .logo img { width: 40px; height: 40px; object-fit: contain; border-radius: 50%; }
+        
+        .back-link { color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 0.3rem; transition: var(--transition); }
+        .back-link:hover { color: var(--accent); }
+
+        .container { max-width: 600px; margin: 1.2rem auto; padding: 0 0.8rem; width: 100%; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 0.8rem; font-weight: 700; }
+
+        .cart-layout { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
+        
+        .cart-items-container { background: var(--white) !important; border-radius: 16px; padding: 1.1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid var(--border-color); width: 100%; }
+        
+        .cart-item { display: flex; flex-direction: column; padding: 1rem 0; border-bottom: 1px solid var(--border-color); gap: 0.8rem; width: 100%; }
+        .cart-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .cart-item:first-child { padding-top: 0; }
+        
+        .cart-item-top { display: flex; align-items: center; gap: 0.9rem; width: 100%; }
+        
+        .cart-item-img-box { width: 58px; height: 58px; background: var(--bg-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; border: 1.5px solid var(--primary); padding: 0; }
+        .cart-item-img-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+        
+        .cart-item-details { flex: 1; min-width: 0; }
+        .cart-item-details h4 { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--primary); margin-bottom: 0.2rem; line-height: 1.2; }
+        .weight-badge { font-size: 0.7rem; color: var(--accent-light); font-weight: 700; background: var(--primary); padding: 0.15rem 0.45rem; border-radius: 6px; display: inline-block; }
+
+        .cart-item-bottom { display: flex; align-items: center; justify-content: space-between; width: 100%; background: var(--white); padding: 0.6rem 0.8rem; border-radius: 12px; border: 1px solid var(--border-color); }
+
+        .quantity-controls { display: flex; align-items: center; gap: 0.5rem; background: var(--bg-light); padding: 3px 8px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .qty-btn { background: none; border: none; cursor: pointer; font-size: 0.8rem; color: var(--primary); font-weight: 700; padding: 2px 4px; transition: var(--transition); }
+        .qty-btn:hover { color: var(--accent); }
+        .qty-val { font-size: 0.8rem; font-weight: 700; color: var(--text-dark); min-width: 16px; text-align: center; }
+
+        .item-price { display: flex; align-items: center; gap: 0.4rem; }
+        .discounted-price { color: var(--primary); font-weight: 700; font-size: 0.95rem; }
+        
+        .remove-btn { background: none; border: none; color: #a93226; cursor: pointer; font-size: 0.9rem; padding: 5px; transition: var(--transition); border-radius: 6px; }
+        .remove-btn:hover { background: rgba(169, 50, 38, 0.08); }
+
+        .cart-summary { background: var(--white) !important; border-radius: 16px; padding: 1.1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid var(--border-color); width: 100%; }
+        .summary-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--primary); margin-bottom: 0.7rem; border-bottom: 1px solid var(--border-color); padding-top: 0; padding-bottom: 0.4rem; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.82rem; color: var(--gray); }
+        .summary-row.total { font-weight: 700; color: var(--primary); font-size: 0.95rem; border-top: 1px solid var(--border-color); padding-top: 0.5rem; margin-top: 0.5rem; }
+
+        .checkout-btn { background-color: var(--primary); color: var(--accent-light); width: 100%; padding: 0.75rem; border-radius: 10px; border: none; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: var(--transition); margin-top: 0.7rem; display: block; text-align: center; text-decoration: none; }
+        .checkout-btn:hover { background-color: var(--primary-dark); }
+
+        .empty-cart { text-align: center; padding: 2rem 1rem; color: var(--gray); font-size: 0.88rem; }
+        .empty-cart i { font-size: 2.2rem; color: var(--primary); margin-bottom: 0.6rem; display: block; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <img src="logo1.jpg" alt="Sahra Kahvesi"> Sahra Kahvesi
+        </a>
+        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Alışverişe Dön</a>
+    </header>
+
+    <div class="container">
+        <h1 class="section-title">Sepetiniz</h1>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC20egq_Y_zevNuZKwMOnYM14a_z1d9FXk",
+    authDomain: "sahra-kahvesi.firebaseapp.com",
+    projectId: "sahra-kahvesi",
+    storageBucket: "sahra-kahvesi.firebasestorage.app",
+    messagingSenderId: "523862673240",
+    appId: "1:523862673240:web:a46e822a876acb7010872d",
+    measurementId: "G-C3ZTV3NTWW"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  
+  window.db = getFirestore(app);
+  console.log("Firebase ve Firestore başarıyla bağlandı!");
+</script>
+
+        <div class="cart-layout">
+            <div class="cart-items-container">
+                <!-- Dinamik ürünler buraya gelecek -->
+            </div>
+
+            <div class="cart-summary" id="cartSummaryBox">
+                <!-- Dinamik özet buraya gelecek -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function renderCart() {
+            let cart = JSON.parse(localStorage.getItem('sahraCart')) || [];
+            const container = document.querySelector('.cart-items-container');
+            const summaryContainer = document.getElementById('cartSummaryBox');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <p>Sepetinizde henüz ürün bulunmuyor.</p>
+                    </div>
+                `;
+                if (summaryContainer) summaryContainer.style.display = 'none';
+                return;
+            }
+
+            if (summaryContainer) summaryContainer.style.display = 'block';
+            container.innerHTML = '';
+            let grandTotal = 0;
+
+            cart.forEach((item, index) => {
+                const qty = item.quantity || item.qty || 1;
+                const itemPrice = parseFloat(item.price) || 0;
+                const itemTotal = itemPrice * qty;
+                grandTotal += itemTotal;
+
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-top">
+                            <div class="cart-item-img-box">
+                                <img src="${item.image || 'fotoaa.jpeg'}" alt="${item.name}">
+                            </div>
+                            <div class="cart-item-details">
+                                <h4>${item.name}</h4>
+                                <span class="weight-badge">${item.weight || '250g'}</span>
+                            </div>
+                        </div>
+                        <div class="cart-item-bottom">
+                            <div class="quantity-controls">
+                                <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                                <span class="qty-val">${qty}</span>
+                                <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                            </div>
+                            <div class="item-price">
+                                <span class="discounted-price">₺${itemTotal.toLocaleString('tr-TR')},00</span>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(${index})"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            updateSummary(grandTotal);
+        }
+
+        function updateSummary(subtotal) {
+            const summaryContainer = document.getElementById('cartSummaryBox');
+            if (!summaryContainer) return;
+
+            // 2000 TL altı için 120 TL kargo ücreti, 2000 TL ve üzeri ücretsiz
+            let shippingFee = subtotal < 2000 ? 120 : 0;
+            let finalTotal = subtotal + shippingFee;
+
+            summaryContainer.innerHTML = `
+                <div class="summary-title"><i class="fa-solid fa-receipt"></i> Sipariş Özeti</div>
+                <div class="summary-row">
+                    <span>Ara Toplam</span>
+                    <span>₺${subtotal.toLocaleString('tr-TR')},00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Kargo</span>
+                    <span>${shippingFee === 0 ? '<span style="color: var(--accent);">Ücretsiz</span>' : '₺' + shippingFee.toLocaleString('tr-TR') + ',00'}</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Toplam Tutar</span>
+                    <span>₺${finalTotal.toLocaleString('tr-TR')},00</span>
+                </div>
+                <a href="checkout.html" class="checkout-btn">Siparişi Güvenle Tamamla</a>
+            `;
+        }
+
+        window.changeQty = function(index, change) {
+            let cart = JSON.parse(localStorage.getItem('sahraCart')) || [];
+            if (cart[index]) {
+                let currentQty = cart[index].quantity || cart[index].qty || 1;
+                currentQty += change;
+                if (currentQty < 1) currentQty = 1;
+                
+                cart[index].quantity = currentQty;
+                cart[index].qty = currentQty;
+                
+                localStorage.setItem('sahraCart', JSON.stringify(cart));
+                renderCart();
+            }
+        }
+
+        window.removeItem = function(index) {
+            let cart = JSON.parse(localStorage.getItem('sahraCart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('sahraCart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+        });
+    </script>
+</body>
+</html>

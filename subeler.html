@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şubelerimiz | Sahra Kahvesi</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase SDK Entegrasyonu -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5yin_CBvw5o11zFgOoWVHie8TQKXl2NQ",
+            authDomain: "aaaa-d2a75.firebaseapp.com",
+            projectId: "aaaa-d2a75",
+            storageBucket: "aaaa-d2a75.firebasestorage.app",
+            messagingSenderId: "1057334067881",
+            appId: "1:1057334067881:web:9e51a3c2d8e9ce2f305fb8",
+            measurementId: "G-J8L1MJWC8P"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.collection = collection;
+        window.addDoc = addDoc;
+        window.getDocs = getDocs;
+        window.doc = doc;
+        window.updateDoc = updateDoc;
+        window.deleteDoc = deleteDoc;
+    </script>
+
+    <style>
+        body {
+            background-color: #1a100c;
+            color: #f5f0eb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Ana Menü / Header Alanı */
+        .site-header {
+            background-color: #26160e;
+            border-bottom: 1px solid #3a2213;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .logo-area img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #c19a6b;
+        }
+
+        /* Navbar Tam Ortalama */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #dcd6d0;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #c19a6b;
+        }
+
+        /* Sayfa İçeriği */
+        .page-container {
+            max-width: 1100px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-title-box {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title-box h1 {
+            color: #f5f0eb;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title-box p {
+            color: #b5a495;
+            font-size: 1.1rem;
+        }
+
+        /* Şubeler Grid Tasarımı */
+        .branches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 480px));
+            gap: 2.5rem;
+            justify-content: center;
+        }
+
+        .branch-card {
+            background-color: #26160e;
+            border: 1px solid #3a2213;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .branch-card:hover {
+            transform: translateY(-5px);
+            border-color: #c19a6b;
+        }
+
+        .branch-img-box {
+            width: 100%;
+            height: 520px;
+            overflow: hidden;
+            background-color: #1f120a;
+        }
+
+        .branch-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .branch-card:hover .branch-img-box img {
+            transform: scale(1.05);
+        }
+
+        .branch-details {
+            padding: 2rem;
+        }
+
+        .branch-details h3 {
+            color: #f5f0eb;
+            margin-top: 0;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #3a2213;
+            padding-bottom: 0.75rem;
+        }
+
+        .branch-info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 0.75rem;
+            color: #dcd6d0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .branch-info-row strong {
+            color: #c19a6b;
+            min-width: 110px;
+        }
+
+        /* Kart İçi Admin Butonları (Başlangıçta Gizli) */
+        .card-admin-actions {
+            display: none;
+            gap: 10px;
+            padding: 0 2rem 2rem 2rem;
+        }
+
+        /* Logoya 3 kez tıklandığında açılacak sınıf */
+        body.admin-mode-active .card-admin-actions {
+            display: flex;
+        }
+
+        .card-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .edit-btn {
+            background: #3a2213;
+            color: #c19a6b;
+            border: 1px solid #c19a6b;
+        }
+
+        .edit-btn:hover {
+            background: #c19a6b;
+            color: #1a100c;
+        }
+
+        .delete-btn {
+            background: #4a1515;
+            color: #ff9999;
+            border: 1px solid #ff6666;
+        }
+
+        .delete-btn:hover {
+            background: #ff6666;
+            color: #1a100c;
+        }
+
+        /* Admin Modalı */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .admin-modal.open {
+            display: flex;
+        }
+
+        .admin-modal-content {
+            background: #26160e;
+            border: 1px solid #c19a6b;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .admin-modal-content h3 {
+            color: #f5f0eb;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #c19a6b;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            background: #1a100c;
+            border: 1px solid #3a2213;
+            border-radius: 8px;
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #c19a6b;
+        }
+
+        input[type="file"].form-control {
+            padding: 0.5rem;
+            cursor: pointer;
+            color: #b5a495;
+        }
+
+        .save-branch-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: #c19a6b;
+            color: #1a100c;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+            margin-top: 1rem;
+        }
+
+        .save-branch-btn:hover {
+            background: #d4af7d;
+        }
+
+        .admin-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            color: #b5a495;
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .site-header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Menü -->
+    <header class="site-header">
+        <div id="adminLogoTrigger" class="logo-area" title="Yönetim Paneli İçin 3 Kez Tıklayın">
+            <img src="logo1.jpg" alt="Sahra Kahvesi Logo">
+            <span>SAHRA KAHVESİ</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html#hikaye">Hikayemiz</a></li>
+            <li><a href="index.html#urun">Ürün</a></li>
+            <li><a href="index.html#rehber">Demleme</a></li>
+            <li><a href="subeler.html" class="active">Şubelerimiz</a></li>
+            <li><a href="index.html#yorumlar">Yorumlar</a></li>
+            <li><a href="index.html#sss">S.S.S.</a></li>
+        </ul>
+    </header>
+
+    <!-- İçerik Alanı -->
+    <div class="page-container">
+        <div class="page-title-box">
+            <h1>Şubelerimiz</h1>
+            <p>Eşsiz Sahra Kahvesi deneyimini yerinde yaşayabileceğiniz mekanlarımız</p>
+        </div>
+
+        <div class="branches-grid" id="branchesContainer">
+            <!-- Sabit Şubeler (Artık bunlara da admin modu açılınca düzenleme/silme eklenecek) -->
+            <div class="branch-card" id="card-tarlak">
+                <div>
+                    <div class="branch-img-box">
+                        <img src="tarlak.jpg" alt="Tarlak Petrol Şubesi">
+                    </div>
+                    <div class="branch-details">
+                        <h3>Tarlak Petrol Şubesi</h3>
+                        <div class="branch-info-row">
+                            <strong>Adres:</strong>
+                            <span>Mercedes Bulvarı, Orhangazi Cd. No:43/1, Tarlak Petrol</span>
+                        </div>
+                        <div class="branch-info-row">
+                            <strong>Çalışma Saatleri:</strong>
+                            <span>08:00 - 23:00</span>
+                        </div>
+                        <div class="branch-info-row">
+                            <strong>Telefon:</strong>
+                            <span>0536 247 57 78</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-admin-actions">
+                    <button class="card-btn edit-btn" onclick="alert('Statik şubeler sabit şablonlardır. Firestore şubelerini dilediğiniz gibi düzenleyebilirsiniz!')">Düzenle</button>
+                    <button class="card-btn delete-btn" onclick="document.getElementById('card-tarlak').remove()">Gizle/Sil</button>
+                </div>
+            </div>
+
+            <div class="branch-card" id="card-alceylan">
+                <div>
+                    <div class="branch-img-box">
+                        <img src="alceylan.png" alt="Alceylan Petrol Şubesi">
+                    </div>
+                    <div class="branch-details">
+                        <h3>Alceylan Petrol Şubesi</h3>
+                        <div class="branch-info-row">
+                            <strong>Adres:</strong>
+                            <span>Bahçeşehir 1. Kısım Mah. 2801. Sok. No:28</span>
+                        </div>
+                        <div class="branch-info-row">
+                            <strong>Çalışma Saatleri:</strong>
+                            <span>08:00 - 23:00</span>
+                        </div>
+                        <div class="branch-info-row">
+                            <strong>Telefon:</strong>
+                            <span>0536 247 57 78</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-admin-actions">
+                    <button class="card-btn edit-btn" onclick="alert('Statik şubeler sabit şablonlardır. Firestore şubelerini dilediğiniz gibi düzenleyebilirsiniz!')">Düzenle</button>
+                    <button class="card-btn delete-btn" onclick="document.getElementById('card-alceylan').remove()">Gizle/Sil</button>
+                </div>
+            </div>
+            <!-- Firestore'dan gelen dinamik şubeler buraya eklenecek -->
+        </div>
+    </div>
+
+    <!-- Admin Şube Ekleme / Düzenleme Modalı -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-modal-content">
+            <button class="admin-close-btn" id="adminCloseBtn">&times;</button>
+            <h3 id="modalTitle">Yeni Şube Ekleme Paneli</h3>
+            
+            <form id="addBranchForm">
+                <input type="hidden" id="editDocId">
+                <div class="form-group">
+                    <label>Şube Adı (Sadece isim yazın, 'Şubesi' otomatik eklenecektir)</label>
+                    <input type="text" id="branchName" class="form-control" placeholder="Örn: Arnavutköy" required>
+                </div>
+                <div class="form-group">
+                    <label>Şube Fotoğrafı Seç</label>
+                    <input type="file" id="branchImgFile" class="form-control" accept="image/*">
+                    <small style="color: #b5a495; display:block; margin-top:4px;">Düzenlerken fotoğraf seçmezseniz eskisi kalır.</small>
+                </div>
+                <div class="form-group">
+                    <label>Açık Adres</label>
+                    <textarea id="branchAddress" class="form-control" rows="2" placeholder="Eski Edirne Asfaltı Cad. No: 1231, Arnavutköy / İstanbul" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Çalışma Saatleri</label>
+                    <input type="text" id="branchHours" class="form-control" placeholder="08:00 - 23:00" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefon Numarası</label>
+                    <input type="text" id="branchPhone" class="form-control" placeholder="0536 247 57 78" required>
+                </div>
+
+                <button type="submit" class="save-branch-btn" id="saveButtonText">Şubeyi Buluta Kaydet</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let clickCount = 0;
+        let clickTimer = null;
+
+        const logoTrigger = document.getElementById('adminLogoTrigger');
+        const adminModal = document.getElementById('adminModal');
+        const adminCloseBtn = document.getElementById('adminCloseBtn');
+        const addBranchForm = document.getElementById('addBranchForm');
+        const branchesContainer = document.getElementById('branchesContainer');
+        const modalTitle = document.getElementById('modalTitle');
+        const saveButtonText = document.getElementById('saveButtonText');
+        const editDocIdInput = document.getElementById('editDocId');
+
+        // Logoya 3 kez tıklama ile admin modunu tetikleme
+        logoTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            clickCount++;
+
+            if (clickTimer) clearTimeout(clickTimer);
+
+            clickTimer = setTimeout(() => {
+                clickCount = 0; 
+            }, 500);
+
+            if (clickCount === 3) {
+                clickCount = 0;
+                // Admin modunu gövdeye ekle -> Butonlar görünür hale gelir!
+                document.body.classList.toggle('admin-mode-active');
+                openAddMode();
+                adminModal.classList.add('open');
+            }
+        });
+
+        adminCloseBtn.addEventListener('click', () => {
+            adminModal.classList.remove('open');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === adminModal) {
+                adminModal.classList.remove('open');
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', fetchFirestoreBranches);
+
+        function openAddMode() {
+            modalTitle.innerText = "Yeni Şube Ekleme Paneli";
+            saveButtonText.innerText = "Şubeyi Buluta Kaydet";
+            addBranchForm.reset();
+            editDocIdInput.value = "";
+            document.getElementById('branchImgFile').setAttribute('required', 'required');
+        }
+
+        addBranchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            let rawName = document.getElementById('branchName').value.trim();
+            let formattedName = rawName.toLowerCase().includes("şubesi") ? rawName : rawName + " Şubesi";
+            
+            const address = document.getElementById('branchAddress').value;
+            const hours = document.getElementById('branchHours').value;
+            const phone = document.getElementById('branchPhone').value;
+            const imageFile = document.getElementById('branchImgFile').files[0];
+            const editId = editDocIdInput.value;
+
+            const saveData = async (imgBase64) => {
+                try {
+                    const branchData = {
+                        name: formattedName,
+                        address: address,
+                        hours: hours,
+                        phone: phone,
+                        createdAt: Date.now()
+                    };
+                    if (imgBase64) {
+                        branchData.img = imgBase64;
+                    }
+
+                    if (editId) {
+                        const docRef = window.doc(window.db, "subeler", editId);
+                        await window.updateDoc(docRef, branchData);
+                        alert("Şube başarıyla güncellendi!");
+                    } else {
+                        await window.addDoc(window.collection(window.db, "subeler"), branchData);
+                        alert("Yeni şube buluta kaydedildi!");
+                    }
+
+                    adminModal.classList.remove('open');
+                    fetchFirestoreBranches();
+                } catch (error) {
+                    console.error("Kayıt hatası: ", error);
+                    alert("İşlem sırasında bir hata oluştu.");
+                }
+            };
+
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(uploadEvent) {
+                    saveData(uploadEvent.target.result);
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                if (editId) {
+                    saveData(null);
+                } else {
+                    alert("Lütfen bir şube fotoğrafı seçin.");
+                }
+            }
+        });
+
+        async function fetchFirestoreBranches() {
+            try {
+                const querySnapshot = await window.getDocs(window.collection(window.db, "subeler"));
+                querySnapshot.forEach((docSnap) => {
+                    const branch = docSnap.data();
+                    const docId = docSnap.id;
+                    // Eğer ekranda zaten yoksa ekle (çift yüklenmeyi önle)
+                    if (!document.getElementById(`card-${docId}`)) {
+                        appendBranchCard(branch, docId);
+                    }
+                });
+            } catch (error) {
+                console.error("Şubeler yüklenirken hata oluştu: ", error);
+            }
+        }
+
+        function appendBranchCard(branch, docId) {
+            const cardHTML = `
+                <div class="branch-card" id="card-${docId}">
+                    <div>
+                        <div class="branch-img-box">
+                            <img src="${branch.img}" alt="${branch.name}">
+                        </div>
+                        <div class="branch-details">
+                            <h3>${branch.name}</h3>
+                            <div class="branch-info-row">
+                                <strong>Adres:</strong>
+                                <span>${branch.address}</span>
+                            </div>
+                            <div class="branch-info-row">
+                                <strong>Çalışma Saatleri:</strong>
+                                <span>${branch.hours}</span>
+                            </div>
+                            <div class="branch-info-row">
+                                <strong>Telefon:</strong>
+                                <span>${branch.phone}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-admin-actions">
+                        <button class="card-btn edit-btn" onclick="openEditModal('${docId}', '${branch.name.replace(' Şubesi','').replace(' şubesi','')}', '${branch.address.replace(/'/g, "\\'")}', '${branch.hours}', '${branch.phone}')">Düzenle</button>
+                        <button class="card-btn delete-btn" onclick="deleteBranch('${docId}')">Sil</button>
+                    </div>
+                </div>
+            `;
+            branchesContainer.insertAdjacentHTML('beforeend', cardHTML);
+        }
+
+        window.openEditModal = function(docId, name, address, hours, phone) {
+            modalTitle.innerText = "Şube Düzenleme Paneli";
+            saveButtonText.innerText = "Değişiklikleri Kaydet";
+            editDocIdInput.value = docId;
+            document.getElementById('branchName').value = name;
+            document.getElementById('branchAddress').value = address;
+            document.getElementById('branchHours').value = hours;
+            document.getElementById('branchPhone').value = phone;
+            document.getElementById('branchImgFile').removeAttribute('required');
+            adminModal.classList.add('open');
+        }
+
+        window.deleteBranch = async function(docId) {
+            if (confirm("Bu şubeyi kalıcı olarak silmek istediğinize emin misiniz?")) {
+                try {
+                    await window.deleteDoc(window.doc(window.db, "subeler", docId));
+                    document.getElementById(`card-${docId}`).remove();
+                    alert("Şube silindi.");
+                } catch (error) {
+                    console.error("Silme hatası:", error);
+                    alert("Silinirken hata oluştu.");
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
