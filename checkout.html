@@ -135,7 +135,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyC20egq_Y_zevNuZKwMOnYM14a_z1d9FXk",
@@ -150,9 +150,7 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         window.db = getFirestore(app);
-    </script>
 
- <script>
         document.addEventListener("DOMContentLoaded", () => {
             let cart = JSON.parse(localStorage.getItem('sahraCart')) || JSON.parse(localStorage.getItem('cart')) || [];
             let total = cart.reduce((sum, item) => sum + (Number(item.price || item.fiyat || 0) * (item.quantity || item.qty || 1)), 0);
@@ -216,15 +214,16 @@
                         total: currentTotal,
                         status: orderStatus,
                         paymentMethod: paymentType,
-                        items: currentCart
+                        items: currentCart,
+                        createdAt: new Date().toISOString()
                     };
 
-                    let orders = JSON.parse(localStorage.getItem('sahra_orders')) || [];
-                    orders.unshift(newOrder);
-                    localStorage.setItem('sahra_orders', JSON.stringify(orders));
-
-                    // Vercel WhatsApp API'sine istek at ve hatayı konsola düşür
                     try {
+                        // 🚀 Doğrudan Firestore'daki "musteri" koleksiyonuna kaydediyoruz!
+                        await addDoc(collection(window.db, "musteri"), newOrder);
+                        console.log("✅ Sipariş 'musteri' koleksiyonuna kaydedildi!");
+
+                        // Vercel WhatsApp API'sine istek at
                         const response = await fetch('/api/send-whatsapp', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -240,12 +239,17 @@
                         const result = await response.json();
                         if (!response.ok) {
                             console.error("❌ WhatsApp API Hatası:", result);
-                            alert("Sipariş kaydedildi ancak WhatsApp bildirimi gönderilemedi!");
                         } else {
                             console.log("✅ WhatsApp bildirimi başarılı:", result);
                         }
                     } catch (err) {
-                        console.error("❌ Ağ Hatası:", err);
+                        console.error("❌ Kayıt veya Ağ Hatası:", err);
+                        alert("Sipariş kaydedilirken bir hata oluştu: " + err.message);
+                        if(submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = "Siparişi Tamamla";
+                        }
+                        return;
                     }
 
                     localStorage.removeItem('sahraCart');
@@ -263,3 +267,5 @@
             }
         });
     </script>
+</body>
+</html>
