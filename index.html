@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahra Kahvesi | Taze Kavrulmuş Özel Türk Kahvesi</title>
+    <meta name="description" content="Sahra Kahvesi ile taze çekilmiş geleneksel Türk kahvesi çeşitlerini keşfedin, hemen sipariş verin.">
+    <meta name="keywords" content="türk kahvesi, menengiç kahvesi, dibek kahvesi, sahra kahvesi sipariş">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;display=swap" rel="stylesheet">
+    <!-- FontAwesome İkon Kütüphanesi CDN Bağlantısı -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Kampanya Kartları ve Mobil Slider Stilleri -->
+    <style>
+    .sahra-campaign-wrapper {
+        width: 100%;
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 0 20px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: #f5efe6;
+        box-sizing: border-box;
+    }
+
+    .sahra-campaign-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .sahra-campaign-header .badge {
+        display: inline-block;
+        background-color: rgba(200, 157, 92, 0.15);
+        border: 1px solid #c89d5c;
+        color: #c89d5c;
+        padding: 6px 18px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+    }
+
+    .sahra-campaign-header h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.4rem;
+        margin: 0 0 10px 0;
+        color: #33251c;
+    }
+
+    .sahra-campaign-header h2 span {
+        color: #b08d57;
+    }
+
+    .sahra-campaign-header p {
+        color: #665244;
+        font-size: 1.05rem;
+        margin: 0;
+    }
+
+    /* Masaüstü Grid Görünümü - Tam Ortalama */
+    .sahra-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 350px);
+        justify-content: center;
+        gap: 25px;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .sahra-card {
+        position: relative;
+        background: linear-gradient(145deg, #1f140e 0%, #2c1d11 100%);
+        border: 1px solid rgba(200, 157, 92, 0.2);
+        border-radius: 16px;
+        padding: 35px 25px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: center;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .sahra-card:hover {
+        transform: translateY(-8px);
+        border-color: #c89d5c;
+        box-shadow: 0 20px 40px rgba(200, 157, 92, 0.15);
+    }
+
+    .sahra-card.popular {
+        border: 2px solid #c89d5c;
+        background: linear-gradient(145deg, #281910 0%, #362214 100%);
+    }
+
+    .sahra-popular-badge {
+        position: absolute;
+        top: 2px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #c89d5c;
+        color: #1a100c;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 16px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .sahra-card-kilo {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        color: #ffffff;
+        margin: 10px 0 5px;
+    }
+
+    .sahra-card-subtitle {
+        color: #c89d5c;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+
+    .sahra-price-box {
+        margin: 20px 0;
+        padding: 15px 0;
+        border-top: 1px dashed rgba(200, 157, 92, 0.2);
+        border-bottom: 1px dashed rgba(200, 157, 92, 0.2);
+    }
+
+    .sahra-old-price {
+        font-size: 1.2rem;
+        color: #8c7a6b;
+        text-decoration: line-through;
+        margin-bottom: 4px;
+    }
+
+    .sahra-new-price {
+        font-size: 2.3rem;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1;
+    }
+
+    .sahra-save-badge {
+        display: inline-block;
+        margin-top: 8px;
+        background-color: rgba(217, 119, 6, 0.2);
+        color: #fbbf24;
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        font-size: 0.8rem;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-weight: 600;
+    }
+
+    .sahra-card-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 25px 0;
+        text-align: left;
+    }
+
+    .sahra-card-features li {
+        font-size: 0.95rem;
+        color: #d4c3b3;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sahra-card-features li::before {
+        content: "✓";
+        color: #c89d5c;
+        font-weight: bold;
+    }
+
+    .sahra-card-btn {
+        display: block;
+        width: 100%;
+        padding: 14px 0;
+        background-color: #c89d5c;
+        color: #1a100c;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(200, 157, 92, 0.25);
+        box-sizing: border-box;
+        border: none;
+        cursor: pointer;
+    }
+
+    .sahra-card-btn:hover {
+        background-color: #e0b26f;
+        transform: translateY(-2px);
+    }
+
+    /* Mobil Kaydırma ve Kenara Binen Ok Butonları */
+    .sahra-scroll-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .sahra-scroll-btn {
+        display: none;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(44, 29, 17, 0.95);
+        border: 1px solid #c89d5c;
+        color: #c89d5c;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        font-size: 1.1rem;
+        cursor: pointer;
+        z-index: 20;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        transition: all 0.3s ease;
+    }
+
+    .sahra-scroll-btn:hover {
+        background: #c89d5c;
+        color: #1a100c;
+    }
+
+    #scrollLeftBtn {
+        left: -20px;
+    }
+
+    #scrollRightBtn {
+        right: -20px;
+    }
+
+    /* Sadece Masaüstünde (PC) 2 KG Başlangıç Paketi Kartını Gizleme Kuralı */
+    @media (min-width: 769px) {
+        .desktop-hidden-card {
+            display: none !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .sahra-campaign-header h2 {
+            font-size: 1.8rem;
+        }
+
+        .sahra-cards-grid {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 15px;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+        }
+
+        .sahra-cards-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .sahra-card {
+            min-width: 100%;
+            scroll-snap-align: center;
+            flex-shrink: 0;
+        }
+
+        .sahra-scroll-btn {
+            display: flex;
+        }
+    }
+    </style>
+<script src="https://www.googletagmanager.com/gtag/js?l=dataLayer&amp;id=G-C3ZTV3NTWW" async=""></script><script>
+    /* Hareket azaltma tercihi yoksa animasyon durumlarını etkinleştir */
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('js');
+    }
+</script>
+<style>
+/* ================= ANİMASYONLAR ================= */
+@keyframes aFadeUp   { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes aWordIn   { from { opacity: 0; transform: translateY(46px) rotate(2deg); } to { opacity: 1; transform: none; } }
+@keyframes aKenBurns { from { scale: 1; } to { scale: 1.12; } }
+@keyframes aRvUp     { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: none; } }
+@keyframes aShimmer  { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+@keyframes aRing     { 0%, 100% { box-shadow: 0 0 0 0 rgba(200,157,92,0); } 50% { box-shadow: 0 0 0 7px rgba(200,157,92,0.18), 0 0 26px 4px rgba(200,157,92,0.22); } }
+@keyframes aPricePop { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes aImgSwap  { 0% { opacity: 0.35; transform: scale(0.96); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes aScrollDot{ 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(16px); } }
+@keyframes aShine    { from { left: -60%; } to { left: 140%; } }
+
+/* Hero */
+.hero-video-container video { animation: aKenBurns 22s ease-out both; }
+.hero-video-container .hero-badge { animation: aFadeUp 0.8s 0.2s cubic-bezier(.2,.7,.2,1) both; }
+.js .hero-video-container h1:not(.split) { opacity: 0; }
+.hero-video-container .hero-word {
+    display: inline-block;
+    animation: aWordIn 0.9s cubic-bezier(.2,.7,.2,1) both;
+    animation-delay: calc(0.45s + var(--i, 0) * 0.14s);
+}
+.hero-video-container p { animation: aFadeUp 0.9s 1.1s cubic-bezier(.2,.7,.2,1) both; }
+.hero-video-container .hero-btns { animation: aFadeUp 0.9s 1.35s cubic-bezier(.2,.7,.2,1) both; }
+
+.hero-dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+.scroll-hint {
+    position: absolute; left: 50%; bottom: 28px; translate: -50% 0;
+    width: 26px; height: 42px;
+    border: 2px solid rgba(244, 232, 216, 0.7); border-radius: 16px;
+    z-index: 1;
+    animation: aFadeUp 0.8s 2s backwards;
+    transition: opacity 0.4s;
+}
+.scroll-hint span {
+    position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px;
+    border-radius: 2px; background: #c89d5c;
+    animation: aScrollDot 1.8s 2.4s infinite;
+}
+.scroll-hint.hide { opacity: 0; pointer-events: none; }
+
+/* Menü kaydırınca */
+header.scrolled {
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Kaydırınca belirme (animasyon kullanır, kartların kendi hover geçişleri bozulmaz) */
+.js .rv:not(.in) { opacity: 0; }
+.rv.in { animation: aRvUp 0.8s cubic-bezier(.2,.7,.2,1) var(--d, 0s) backwards; }
+.rv.rv { transition-property: transform, border-color, box-shadow, background, background-color, color, filter; }
+
+/* Popüler kart nabzı */
+.sahra-card.popular::after {
+    content: ""; position: absolute; inset: -2px; border-radius: 18px; pointer-events: none;
+    animation: aRing 3.2s ease-in-out infinite;
+}
+
+/* Fiyat yüklenirken parlayan iskelet */
+.sahra-new-price.skel {
+    display: block; width: min(60%, 9rem); margin-left: auto; margin-right: auto;
+    color: transparent !important; border-radius: 8px;
+    background: linear-gradient(90deg, rgba(200,157,92,0.10), rgba(200,157,92,0.35), rgba(200,157,92,0.10));
+    background-size: 200% 100%;
+    animation: aShimmer 1.4s linear infinite;
+}
+.product-price.skel {
+    display: inline-block; min-width: 7rem; border-radius: 8px;
+    color: transparent !important;
+    background: linear-gradient(90deg, rgba(200,157,92,0.10), rgba(200,157,92,0.35), rgba(200,157,92,0.10));
+    background-size: 200% 100%;
+    animation: aShimmer 1.4s linear infinite;
+}
+.product-price.price-pop { display: inline-block; animation: aPricePop 0.45s cubic-bezier(.2,.7,.2,1); }
+#productImage.img-swap { animation: aImgSwap 0.5s ease; }
+
+/* Butonlarda ışık geçişi */
+.sahra-card-btn, .buy-btn { position: relative; overflow: hidden; }
+.sahra-card-btn::after, .buy-btn::after {
+    content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg); pointer-events: none;
+}
+.sahra-card-btn:hover::after, .buy-btn:hover::after { animation: aShine 0.8s ease; }
+
+/* Sepete uçan ürün */
+.fly-dot {
+    position: fixed; z-index: 3000; width: 54px; height: 54px; border-radius: 50%;
+    background: #c89d5c center / cover no-repeat;
+    border: 2px solid rgba(255, 243, 224, 0.8);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-video-container video,
+    .hero-video-container .hero-badge,
+    .hero-video-container p,
+    .hero-video-container .hero-btns,
+    .scroll-hint, .scroll-hint span,
+    .sahra-card.popular::after,
+    .sahra-new-price.skel, .product-price.skel { animation: none !important; }
+    .hero-dust { display: none; }
+}
+</style>
+</head>
+<body>
+
+    <!-- Modern Toast Bildirim Alanı -->
+    <div id="toastNotification">
+        <div class="toast-icon-box">
+            <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+        <div class="toast-content">
+            <span class="toast-title">Sepete Eklendi</span>
+            <span id="toastMessage">Ürün başarıyla sepetinize eklendi.</span>
+        </div>
+        <a href="sepet.html" class="toast-action-btn">Sepete Git</a>
+    </div>
+
+    <!-- Yasal Bilgilendirme Modalı -->
+    <div class="modal" id="legalModal" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn">×</button>
+            <h3 class="modal-title" id="modalTitle">Bilgilendirme</h3>
+            <div class="modal-body" id="modalBody">İçerik yükleniyor...</div>
+        </div>
+    </div>
+
+    <!-- Üst Duyuru Barı -->
+    <div class="top-bar">
+        <i class="fa-solid fa-truck-fast"></i> ₺1.000 Üzeri Alışverişlerde Kargo Bedava!
+    </div>
+
+    <!-- Header / Menü Alanı -->
+    <header>
+        <a href="#" id="adminTrigger" class="logo">
+            <img src="logo1.jpg" alt="Sahra Kahvesi Logo">
+            <span>SAHRA KAHVESİ</span>
+        </a>
+
+        <nav id="navMenu">
+            <a href="#hikaye">Hikayemiz</a>
+            <a href="#urun">Ürün</a>
+            <a href="#rehber">Demleme</a>
+            <a href="#yorumlar">Yorumlar</a>
+            <a href="#sss">S.S.S.</a>
+            <a href="blog.html">Blog</a>
+            <a href="subeler.html">Şubelerimiz</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="sepet.html" class="cart-icon-btn" id="cartBtn" title="Sepetim">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge">0</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menüyü Aç/Kapat">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+         
+    <!-- Hero Bölümü -->
+    <section class="hero-video-container" style="position: relative; width: 100%; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center;">
+        <video autoplay="" muted="" loop="" playsinline="" style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%); object-fit: cover; z-index: -1;">
+            <source src="video.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+
+        <div style="position: relative; z-index: 1; max-width: 800px; padding: 0 20px;">
+            <div class="hero-badge">Geleneksel &amp; Modern Harman</div>
+            <h1 style="color: #fff; font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">ÇÖLÜN RUHU, KAHVENİN TADI</h1>
+            <p style="color: #f4e8d8; font-size: clamp(1rem, 1.5vw, 1.2rem); margin-bottom: 30px; line-height: 1.6; text-shadow: 0 1px 6px rgba(0,0,0,0.8);">Özenle kavrulmuş %100 Arabika çekirdekleri, geleneksel menengiç ve doğanın saklı baharatı kakule ile hazırlanan imza kahve deneyimini keşfedin.</p>
+            <div class="hero-btns" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <a href="#hikaye" class="btn-primary"><i class="fa-solid fa-book-open"></i> Hikayemizi Keşfet</a>
+                <a href="#urun" class="btn-outline"><i class="fa-solid fa-bag-shopping"></i> Satış Alanına Git</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1. Hikayemiz Bölümü -->
+    <section class="story-section" id="hikaye">
+        <div class="container" style="margin: 0 auto; padding: 0 1rem;">
+            <div class="story-grid">
+                <div class="story-image">
+                    <img src="h1.jpg" alt="Hikayemiz">
+                </div>
+                <div class="story-content">
+                    <h2>Köklerimizden Gelen Eşsiz Bir Miras</h2>
+                    <p>Sahra Kahvesi; sıradan bir kahve deneyiminin ötesine geçerek, doğunun toprak kokan aromalarını modern kahve kültürüyle harmanlamak için yola çıktı.</p>
+                    <p>En nitelikli Arabika çekirdeklerini özenle seçiyor; doğanın bize sunduğu menengiç ve kakule gibi kadim tatları titizlikle işleyerek her fincanda aynı tazeliği ve eşsiz aromayı sunuyoruz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KAMPANYA PAKETLERİ BÖLÜMÜ (Mobil Slider'lı) -->
+    <div class="sahra-campaign-wrapper">
+      <div class="sahra-campaign-header">
+        <span class="badge">🔥 Özel Toplu Alım Kampanyası</span>
+        <h2><span>Sahra Kahvesi Büyük Boy Fırsatları</span></h2>
+        <p>Taze çekilmiş Menengiç &amp; Kakuleli harmanımızda çok al, az öde!</p>
+      </div>
+
+      <div class="sahra-scroll-container">
+        <div class="sahra-cards-grid" id="sahraCardsGrid">
+          <!-- 2 KG (Başlangıç Paketi) - Sadece masaüstünde (PC) gizlenmesi için 'desktop-hidden-card' eklendi -->
+          <div class="sahra-card desktop-hidden-card">
+            <div>
+              <div class="sahra-card-kilo">2 KG</div>
+              <div class="sahra-card-subtitle">Başlangıç Paketi</div>
+              
+              <div class="sahra-price-box">
+                <div class="sahra-old-price">...</div>
+                <div class="sahra-new-price">Yükleniyor...</div>
+                <span class="sahra-save-badge">İndirimli</span>
+              </div>
+
+              <ul class="sahra-card-features">
+                <li>Özel Menengiç &amp; Kakule Harmanı</li>
+                <li>Aroma korumalı kilitli ambalaj</li>
+                <li>Ücretsiz Hızlı Kargo</li>
+              </ul>
+            </div>
+            <button type="button" class="sahra-card-btn add-campaign-btn" data-name="Sahra Geleneksel Harmanı (2 KG Avantaj Paketi)" data-price="0" data-weight="2 KG" data-image="fotoaa.jpeg">Sipariş Ver</button>
+          </div>
+
+          <!-- 3 KG (Popüler) -->
+          <div class="sahra-card popular">
+            <div>
+              <div class="sahra-card-kilo">2 KG</div>
+              <div class="sahra-card-subtitle">Aile &amp; Ofis Paketi</div>
+              
+              <div class="sahra-price-box">
+                <div class="sahra-old-price">...</div>
+                <div class="sahra-new-price">Yükleniyor...</div>
+                <span class="sahra-save-badge">İndirimli</span>
+              </div>
+
+              <ul class="sahra-card-features">
+                <li>Özel Menengiç &amp; Kakule Harmanı</li>
+                <li>Aroma korumalı kilitli ambalaj</li>
+                <li>Ücretsiz Hızlı Kargo</li>
+                <li>Özel Hediye Kahve Ölçeği</li>
+              </ul>
+            </div>
+            <button type="button" class="sahra-card-btn add-campaign-btn" data-name="Sahra Geleneksel Harmanı (2 KG Aile Paketi)" data-price="0" data-weight="3 KG" data-image="fotoaa.jpeg">Sipariş Ver</button>
+          </div>
+
+          <!-- 4 KG -->
+          <div class="sahra-card">
+            <div>
+              <div class="sahra-card-kilo">3 KG</div>
+              <div class="sahra-card-subtitle">Süper Avantaj Paketi</div>
+              
+              <div class="sahra-price-box">
+                <div class="sahra-old-price">...</div>
+                <div class="sahra-new-price">Yükleniyor...</div>
+                <span class="sahra-save-badge">İndirimli</span>
+              </div>
+
+              <ul class="sahra-card-features">
+                <li>Özel Menengiç &amp; Kakule Harmanı</li>
+                <li>Aroma korumalı kilitli ambalaj</li>
+                <li>Ücretsiz VIP Kargo</li>
+                <li>Maksimum İndirim Oranı</li>
+              </ul>
+            </div>
+            <button type="button" class="sahra-card-btn add-campaign-btn" data-name="Sahra Geleneksel Harmanı (4 KG Süper Paket)" data-price="0" data-weight="4 KG" data-image="fotoaa.jpeg">Sipariş Ver</button>
+          </div>
+        </div>
+
+        <!-- Mobil Kaydırma Okları -->
+        <div class="sahra-scroll-buttons">
+          <button type="button" class="sahra-scroll-btn" id="scrollLeftBtn"><i class="fa-solid fa-chevron-left"></i></button>
+          <button type="button" class="sahra-scroll-btn" id="scrollRightBtn"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Satış ve Ürün Vitrini Bölümü -->
+    <div class="container" id="urun">
+        <div class="section-header">
+            <span>Özel Koleksiyon</span>
+            <h2 class="section-title">Sahra Özel Harmanı</h2>
+        </div>
+
+        <div class="single-product-wrapper" id="productCard">
+            <div class="product-image-section">
+                <img id="productImage" src="fotoaa.jpeg" alt="Sahra Geleneksel Harmanı">
+            </div>
+            
+            <div class="product-details">
+                <div>
+                    <h3 class="product-title">Sahra Geleneksel Harmanı</h3>
+                    <p class="product-desc">Yumuşak içimi, topraksı menengiç aroması ve kakulenin ferahlatıcı dokunuşuyla her yudumda sizi eşsiz bir yolculuğa çıkaran tek ve benzersiz harmanımız.</p>
+                    
+                    <div class="selection-group">
+                        <span class="selection-label">Gramaj Seçiniz:</span>
+                        <div class="option-pills weight-options">
+                            <button type="button" class="option-btn weight-btn active" data-price="0" data-weight="250g" data-image="fotoaa.jpeg">250 gr</button>
+                            <button type="button" class="option-btn weight-btn" data-price="0" data-weight="500g" data-image="fotoaa.jpeg">500 gr</button>
+                            <button type="button" class="option-btn weight-btn" data-price="0" data-weight="1kg" data-image="fotoaa.jpeg">1 kg</button>
+                        </div>
+                    </div>
+
+                    <div class="product-ingredients">
+                        <span class="ingredient-pill"><i class="fa-solid fa-check"></i> %100 Arabika</span>
+                        <span class="ingredient-pill"><i class="fa-solid fa-check"></i> Menengiç Özlü</span>
+                        <span class="ingredient-pill"><i class="fa-solid fa-check"></i> Hakiki Kakule</span>
+                    </div>
+                </div>
+
+                <div class="product-action-footer">
+                    <div class="price-and-qty-row">
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--gray); display: block;">Birim Fiyat</span>
+                            <span class="price product-price">Yükleniyor...</span>
+                        </div>
+                        <div class="quantity-control">
+                            <button type="button" class="qty-btn" id="qtyMinusBtn" aria-label="Azalt">-</button>
+                            <input type="number" id="qtyInput" class="qty-input" value="1" min="1" max="50" readonly="">
+                            <button type="button" class="qty-btn" id="qtyPlusBtn" aria-label="Artır">+</button>
+                        </div>
+                    </div>
+                    <button class="buy-btn" id="addToCartBtn"><i class="fa-solid fa-cart-plus"></i> Sepete Ekle</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="trust-badges">
+            <div class="trust-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>256-Bit SSL Güvenli Ödeme</span>
+            </div>
+            <div class="trust-item">
+                <i class="fa-solid fa-truck-ramp-box"></i>
+                <span>24 Saatte Kargoda</span>
+            </div>
+            <div class="trust-item">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Taze Çekilmiş &amp; Katkısız</span>
+            </div>
+            <div class="trust-item">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Koşulsuz İade Garantisi</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Demleme Rehberi -->
+    <div class="container" id="rehber">
+        <div class="section-header">
+            <span>Mükemmel Fincan İçin</span>
+            <h2 class="section-title">Demleme Rehberi</h2>
+        </div>
+        <div class="brew-steps">
+            <div class="brew-card">
+                <div class="brew-icon"><i class="fa-solid fa-scale-unbalanced"></i></div>
+                <h4>Ölçü</h4>
+                <p>Her fincan (70 ml) su için tepeleme 1 tatlı kaşığı (yaklaşık 7 gr) Sahra Kahvesi kullanın.</p>
+            </div>
+            <div class="brew-card">
+                <div class="brew-icon"><i class="fa-solid fa-water"></i></div>
+                <h4>Soğuk Su</h4>
+                <p>Cezvenize mutlaka içme suyu (oda sıcaklığında veya soğuk) ekleyin. Asla sıcak suyla başlamayın.</p>
+            </div>
+            <div class="brew-card">
+                <div class="brew-icon"><i class="fa-solid fa-fire"></i></div>
+                <h4>Kısık Ateş</h4>
+                <p>Kahveyi ve suyu cezvede iyice karıştırdıktan sonra kısık ateşte yavaşça köpürtün.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Müşteri Yorumları -->
+    <div class="container" id="yorumlar">
+        <div class="section-header">
+            <span>Mutlu Kahve Severler</span>
+            <h2 class="section-title">Kullananlar Ne Diyor?</h2>
+            <div style="text-align: center; margin: 1.5rem 0 0.5rem 0;">
+                <button id="toggleReviewForm" style="background: #33251c; color: #fff; border: none; padding: 0.6rem 1.5rem; border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 1rem;">Siz De Deneyiminizi Paylaşın</button>
+                
+                <form id="reviewForm" style="display: none; background: #fff; max-width: 90%; width: 400px; margin: 0 auto 1.5rem auto; padding: 1.2rem; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left;">
+                    <div style="margin-bottom: 0.8rem;">
+                        <label style="font-size: 0.8rem; font-weight: 700; color: #33251c; display: block; margin-bottom: 0.3rem;">Adınız Soyadınız</label>
+                        <input type="text" id="revName" required="" placeholder="Örn: Ahmet Y." style="width: 100%; padding: 0.6rem; border: 1px solid #d8bf98; border-radius: 8px; background: #faf8f5;">
+                    </div>
+                    
+                    <div style="margin-bottom: 0.8rem;">
+                        <label style="font-size: 0.8rem; font-weight: 700; color: #33251c; display: block; margin-bottom: 0.3rem;">E-Posta Adresiniz (Gizli kalır)</label>
+                        <input type="email" id="revEmail" required="" placeholder="ornek@mail.com" style="width: 100%; padding: 0.6rem; border: 1px solid #d8bf98; border-radius: 8px; background: #faf8f5;">
+                    </div>
+
+                    <div style="margin-bottom: 0.8rem;">
+                        <label style="font-size: 0.8rem; font-weight: 700; color: #33251c; display: block; margin-bottom: 0.3rem;">Puanınız</label>
+                        <select id="revRating" style="width: 100%; padding: 0.6rem; border: 1px solid #d8bf98; border-radius: 8px; background: #faf8f5;">
+                            <option value="5">⭐⭐⭐⭐⭐ (5 Yıldız)</option>
+                            <option value="4">⭐⭐⭐⭐ (4 Yıldız)</option>
+                            <option value="3">⭐⭐⭐ (3 Yıldız)</option>
+                            <option value="2">⭐⭐ (2 Yıldız)</option>
+                            <option value="1">⭐ (1 Yıldız)</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label style="font-size: 0.8rem; font-weight: 700; color: #33251c; display: block; margin-bottom: 0.3rem;">Yorumunuz</label>
+                        <textarea id="revText" rows="3" required="" placeholder="Kahve hakkındaki düşünceleriniz..." style="width: 100%; padding: 0.6rem; border: 1px solid #d8bf98; border-radius: 8px; background: #faf8f5; resize: vertical;"></textarea>
+                    </div>
+
+                    <button type="submit" style="width: 100%; background: #b08d57; color: #fff; border: none; padding: 0.7rem; border-radius: 8px; font-weight: 700; cursor: pointer;">Yorumu Gönder</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="reviews-grid" id="reviewsContainer">
+            <div class="review-card">
+                <div>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"Kakulenin aroması kahveye o kadar güzel işlemiş ki, sabahları içtiğimde günüm çok daha zinde geçiyor. Kesinlikle favorim oldu!"</p>
+                </div>
+                <div class="reviewer"><i class="fa-solid fa-circle-user"></i> Zeynep K.</div>
+            </div>
+            <div class="review-card">
+                <div>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"Menengiç ve kahve uyumu harika. Klasik Türk kahvelerinden sıkılanlar için mükemmel bir alternatif, kargo da çok hızlıydı."</p>
+                </div>
+                <div class="reviewer"><i class="fa-solid fa-circle-user"></i> Mert A.</div>
+            </div>
+            <div class="review-card">
+                <div>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"Harika bir tat, paketlemesi ve tazeliğini koruyan kilitli poşeti çok başarılı. Tavsiye ederim."</p>
+                </div>
+                <div class="reviewer"><i class="fa-solid fa-circle-user"></i> Selin Y.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sıkça Sorulan Sorular -->
+    <div class="container" id="sss">
+        <div class="section-header">
+            <span>Merak Edilenler</span>
+            <h2 class="section-title">Sıkça Sorulan Sorular</h2>
+        </div>
+        <div class="faq-accordion">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Sahra Kahvesi'nin içerisinde hangi çekirdekler ve tatlar var?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Özenle seçilmiş %100 Arabika çekirdeklerini Güneydoğu'nun geleneksel menengiç taneleri ve taze öğütülmüş yeşil kakule ile harmanlıyoruz. Kesinlikle yapay aroma verici içermez.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Siparişim ne kadar sürede kargoya teslim edilir?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Hafta içi saat 14:00'e kadar verilen tüm siparişler aynı gün taze olarak paketlenir ve 24 saat içinde anlaşmalı kargo firmamıza teslim edilir.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Açıldıktan sonra tazeliğini nasıl korumalıyım?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Kahvelerimiz özel kilitli (zipli) aromayı hapseden valfli ambalajlarda gönderilir. Paketin ağzını kapalı tutarak doğrudan güneş ışığı almayan, serin ve kuru bir ortamda 12 aya kadar taze saklayabilirsiniz.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Ücretsiz kargo şartı nedir?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>₺1.000 ve üzeri tüm siparişlerinizde kargo ücreti tamamen tarafımızca karşılanmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="iletisim">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Sahra Kahvesi</h4>
+                <p>Geleneksel lezzetleri modern fincanınıza taşıyan butik kahve deneyimi. Doğallık ve zengin aroma her yudumda sizinle.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/sahrakahvesi?stkn=MWtocWs4ajNyYm4ybA==" target="_blank" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://wa.me/905362475778" target="_blank" class="social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Hızlı Erişim</h4>
+                <ul>
+                    <li><a href="#">Ana Sayfa</a></li>
+                    <li><a href="#hikaye">Hikayemiz</a></li>
+                    <li><a href="#urun">Özel Ürün</a></li>
+                    <li><a href="#rehber">Demleme Rehberi</a></li>
+                    <li><a href="#sss">S.S.S.</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Kurumsal &amp; Yasal</h4>
+                <ul>
+                    <li><button class="legal-trigger" data-policy="mesafeli">Mesafeli Satış Sözleşmesi</button></li>
+                    <li><button class="legal-trigger" data-policy="iade">İptal ve İade Koşulları</button></li>
+                    <li><button class="legal-trigger" data-policy="gizlilik">Gizlilik ve KVKK Politikası</button></li>
+                    <li><button class="legal-trigger" data-policy="teslimat">Teslimat &amp; Kargo Takibi</button></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Müşteri Destek</h4>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-envelope"></i> sahrakahvesi@icloud.com</li>
+                    <li><i class="fa-solid fa-phone"></i> +90 539 798 13 00 </li>
+                    <li><i class="fa-solid fa-phone"></i> +90 536 247 57 78 </li>
+                    <li><i class="fa-solid fa-location-dot"></i> Bahçeşehir, İstanbul / Türkiye</li>
+                    <li><i class="fa-solid fa-clock"></i> Pzt - Pzr: 08:00 - 22:00</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Sahra Kahvesi. Tüm hakları saklıdır.</p>
+            <div class="payment-icons">
+                <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                <i class="fa-brands fa-cc-mastercard" title="MasterCard"></i>
+                <i class="fa-solid fa-lock" title="Güvenli Ödeme"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Harici JS Dosyası -->
+    <script src="script.js"></script>
+
+    <!-- Firebase ve Dinamik Fiyat Scripti -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC20egq_Y_zevNuZKwMOnYM14a_z1d9FXk",
+            authDomain: "sahra-kahvesi.firebaseapp.com",
+            projectId: "sahra-kahvesi",
+            storageBucket: "sahra-kahvesi.firebasestorage.app",
+            messagingSenderId: "523862673240",
+            appId: "1:523862673240:web:a46e822a876acb7010872d",
+            measurementId: "G-C3ZTV3NTWW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        window.db = db;
+
+        // --- SEPET ROZETİ GÜNCELLEME ---
+        function updateCartBadge() {
+            let cart = JSON.parse(localStorage.getItem('sahraCart')) || [];
+            let totalCount = cart.reduce((sum, item) => sum + (item.quantity || item.qty || 1), 0);
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = totalCount;
+            }
+        }
+
+        document.addEventListener("click", (e) => {
+            const btn = e.target.closest(".weight-btn");
+            if (btn) {
+                document.querySelectorAll(".weight-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                updatePriceDisplay(btn);
+
+                const newImage = btn.getAttribute("data-image");
+                const imgEl = document.getElementById("productImage");
+                if (imgEl && newImage) {
+                    imgEl.src = newImage;
+                }
+            }
+        });
+
+        // --- SLIDER SAĞ/SOL OK İŞLEVLERİ ---
+        const grid = document.getElementById('sahraCardsGrid');
+        const leftBtn = document.getElementById('scrollLeftBtn');
+        const rightBtn = document.getElementById('scrollRightBtn');
+
+        if (leftBtn && rightBtn && grid) {
+            rightBtn.onclick = function() {
+                const cardWidth = grid.querySelector('.sahra-card').offsetWidth + 25;
+                grid.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            };
+
+            leftBtn.onclick = function() {
+                const cardWidth = grid.querySelector('.sahra-card').offsetWidth + 25;
+                grid.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            };
+        }
+
+        // --- FİREBASE'den ÜRÜN VE KAMPANYA FİYATLARINI ÇEKME ---
+        async function loadProductDataFromFirestore() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                querySnapshot.forEach((docSnap) => {
+                    const product = docSnap.data();
+                    
+                    const titleEl = document.querySelector(".product-title");
+                    if (titleEl && product.name) titleEl.textContent = product.name;
+
+                    const descEl = document.querySelector(".product-desc");
+                    if (descEl && product.description) descEl.textContent = product.description;
+
+                    const weightBtns = document.querySelectorAll(".weight-btn");
+                    weightBtns.forEach(btn => {
+                        const weight = btn.getAttribute("data-weight");
+                        let currentPrice = "";
+                        let originalPrice = "";
+
+                        if (weight === "250g") {
+                            currentPrice = product.price250;
+                            originalPrice = product.original250 || "";
+                        } else if (weight === "500g") {
+                            currentPrice = product.price500;
+                            originalPrice = product.original500 || "";
+                        } else if (weight === "1kg") {
+                            currentPrice = product.price1kg;
+                            originalPrice = product.original1kg || "";
+                        }
+
+                        if (currentPrice) {
+                            btn.setAttribute("data-price", currentPrice);
+                            if (originalPrice) {
+                                btn.setAttribute("data-original", "₺" + originalPrice);
+                            } else {
+                                btn.removeAttribute("data-original");
+                            }
+                        }
+                    });
+
+                    const activeBtn = document.querySelector(".weight-btn.active") || document.querySelector(".weight-btn");
+                    if (activeBtn) {
+                        updatePriceDisplay(activeBtn);
+                    }
+
+                    const campaignBtns = document.querySelectorAll('.add-campaign-btn');
+                    campaignBtns.forEach(btn => {
+                        const weight = btn.getAttribute('data-weight');
+                        let cloudPrice = null;
+
+                        if (weight === '2 KG') {
+                            cloudPrice = product.campaign2kg_price;
+                        } else if (weight === '3 KG') {
+                            cloudPrice = product.campaign2kg_price;
+                        } else if (weight === '4 KG') {
+                            cloudPrice = product.campaign3kg_price; 
+                        }
+
+                        if (cloudPrice) {
+                            btn.setAttribute('data-price', cloudPrice);
+                            const cardPriceBox = btn.closest('.sahra-card')?.querySelector('.sahra-new-price');
+                            if (cardPriceBox) {
+                                cardPriceBox.textContent = Number(cloudPrice).toLocaleString('tr-TR') + " TL";
+                            }
+                        }
+                    });
+                });
+            } catch (e) {
+                console.error("Ürün verileri Firestore'dan yüklenirken hata oluştu: ", e);
+            }
+        }
+
+        function updatePriceDisplay(btn) {
+            const priceDisplay = document.querySelector(".product-price");
+            if (!priceDisplay) return;
+
+            const price = btn.getAttribute("data-price");
+            const original = btn.getAttribute("data-original");
+
+            if (original) {
+                priceDisplay.innerHTML = `
+                    <span style="text-decoration: line-through; color: #888; font-size: 0.7em; margin-right: 8px;">${original}</span>
+                    <span style="color: #b33939;">₺${Number(price).toLocaleString('tr-TR')},00</span>
+                `;
+            } else {
+                priceDisplay.textContent = "₺" + Number(price).toLocaleString('tr-TR') + ",00";
+            }
+        }
+
+        // --- KAMPANYA SEPETE EKLEME İŞLEVİ ---
+        document.addEventListener("click", function(e) {
+            const btn = e.target.closest(".add-campaign-btn");
+            if (!btn) return;
+
+            const name = btn.getAttribute("data-name");
+            const price = parseFloat(btn.getAttribute("data-price"));
+            const weight = btn.getAttribute("data-weight");
+            const image = btn.getAttribute("data-image");
+
+            let cart = JSON.parse(localStorage.getItem('sahraCart')) || [];
+            
+            let existingItem = cart.find(item => item.name === name && item.weight === weight);
+            if (existingItem) {
+                existingItem.quantity = (existingItem.quantity || existingItem.qty || 1) + 1;
+                existingItem.qty = existingItem.quantity;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    weight: weight,
+                    image: image,
+                    quantity: 1,
+                    qty: 1
+                });
+            }
+
+            localStorage.setItem('sahraCart', JSON.stringify(cart));
+            updateCartBadge();
+
+            const toast = document.getElementById("toastNotification");
+            const toastMsg = document.getElementById("toastMessage");
+            if (toast && toastMsg) {
+                toastMsg.textContent = `${name} (${weight}) sepetinize eklendi.`;
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3500);
+            }
+        });
+
+        window.addEventListener("DOMContentLoaded", () => {
+            updateCartBadge();
+            loadProductDataFromFirestore();
+        });
+    </script>
+
+<!-- Animasyon scripti -->
+<script>
+(function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var header = document.querySelector('header');
+    var hero = document.querySelector('.hero-video-container');
+
+    /* Menü: kaydırınca bulanık cam + gölge, kaydırma ipucunu gizle */
+    var hint = null;
+    function onScroll() {
+        if (header) header.classList.toggle('scrolled', window.scrollY > 40);
+        if (hint) hint.classList.toggle('hide', window.scrollY > 80);
+    }
+
+    if (reduce) {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        return;
+    }
+
+    /* Hero başlığı kelime kelime */
+    if (hero) {
+        var h1 = hero.querySelector('h1');
+        if (h1) {
+            var words = h1.textContent.trim().split(/\s+/);
+            h1.innerHTML = '';
+            words.forEach(function (w, i) {
+                var s = document.createElement('span');
+                s.className = 'hero-word';
+                s.style.setProperty('--i', i);
+                s.textContent = w;
+                h1.appendChild(s);
+                if (i < words.length - 1) h1.appendChild(document.createTextNode(' '));
+            });
+            h1.classList.add('split');
+        }
+
+        /* Kaydırma ipucu */
+        hint = document.createElement('a');
+        hint.href = '#hikaye';
+        hint.className = 'scroll-hint';
+        hint.setAttribute('aria-label', 'Aşağı kaydır');
+        hint.innerHTML = '<span></span>';
+        hero.appendChild(hint);
+
+        /* Hero'da süzülen altın tozu */
+        var c = document.createElement('canvas');
+        c.className = 'hero-dust';
+        c.setAttribute('aria-hidden', 'true');
+        hero.appendChild(c);
+        var x = c.getContext('2d');
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var W = 0, H = 0, P = [], visible = true;
+        var size = function () {
+            W = hero.clientWidth; H = hero.clientHeight;
+            c.width = W * dpr; c.height = H * dpr;
+            x.setTransform(dpr, 0, 0, dpr, 0, 0);
+        };
+        var make = function (initial) {
+            return {
+                x: Math.random() * W,
+                y: initial ? Math.random() * H : H + 10,
+                r: Math.random() * 1.8 + 0.6,
+                v: Math.random() * 0.4 + 0.15,
+                s: Math.random() * Math.PI * 2,
+                a: Math.random() * 0.4 + 0.15
+            };
+        };
+        size();
+        var n = W < 600 ? 20 : 36;
+        for (var i = 0; i < n; i++) P.push(make(true));
+        window.addEventListener('resize', size);
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(hero);
+        }
+        var tick = function () {
+            if (visible) {
+                x.clearRect(0, 0, W, H);
+                for (var i = 0; i < P.length; i++) {
+                    var p = P[i];
+                    p.y -= p.v; p.s += 0.012;
+                    x.beginPath();
+                    x.arc(p.x + Math.sin(p.s) * 14, p.y, p.r, 0, 6.283);
+                    x.fillStyle = 'rgba(200,157,92,' + p.a + ')';
+                    x.fill();
+                    if (p.y < -10) P[i] = make(false);
+                }
+            }
+            requestAnimationFrame(tick);
+        };
+        tick();
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* Kaydırınca belirme */
+    var targets = document.querySelectorAll('.story-image, .story-content, .sahra-campaign-header, .sahra-card, .section-header, .single-product-wrapper, .trust-item, .brew-card, .review-card, .faq-item');
+    targets.forEach(function (el) {
+        var idx = Array.prototype.indexOf.call(el.parentNode.children, el);
+        el.style.setProperty('--d', (Math.min(idx, 5) * 0.1) + 's');
+        el.classList.add('rv');
+    });
+    if (!('IntersectionObserver' in window)) {
+        targets.forEach(function (t) { t.classList.add('in'); });
+    } else {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        targets.forEach(function (t) { io.observe(t); });
+    }
+
+    /* Kampanya fiyatları: yüklenirken iskelet, gelince sayarak oturur */
+    function handlePrice(el) {
+        var t = el.textContent.trim();
+        if (t === el._last) return;
+        if (/yükleniyor/i.test(t)) { el.classList.add('skel'); el._last = t; return; }
+        el.classList.remove('skel');
+        var m = t.match(/^([\d.]+)\s*TL$/);
+        if (!m) { el._last = t; return; }
+        var target = parseInt(m[1].replace(/\./g, ''), 10);
+        var start = performance.now();
+        cancelAnimationFrame(el._raf);
+        (function step(now) {
+            var p = Math.min(1, (now - start) / 900);
+            var v = Math.round(target * (1 - Math.pow(1 - p, 3)));
+            var s = v.toLocaleString('tr-TR') + ' TL';
+            el._last = s;
+            el.textContent = s;
+            if (p < 1) el._raf = requestAnimationFrame(step);
+        })(start);
+    }
+    document.querySelectorAll('.sahra-new-price').forEach(function (el) {
+        handlePrice(el);
+        new MutationObserver(function () { handlePrice(el); })
+            .observe(el, { childList: true, characterData: true, subtree: true });
+    });
+
+    /* Ürün fiyatı: yüklenirken iskelet, değişince yukarı kayarak yenilenir */
+    var pp = document.querySelector('.product-price');
+    if (pp) {
+        var ppUpdate = function () {
+            var loading = /yükleniyor/i.test(pp.textContent);
+            pp.classList.toggle('skel', loading);
+            if (!loading) {
+                pp.classList.remove('price-pop');
+                void pp.offsetWidth;
+                pp.classList.add('price-pop');
+            }
+        };
+        ppUpdate();
+        new MutationObserver(ppUpdate).observe(pp, { childList: true, characterData: true, subtree: true });
+    }
+
+    /* Ürün görseli değişince yumuşak geçiş */
+    var pimg = document.getElementById('productImage');
+    if (pimg) {
+        new MutationObserver(function () {
+            pimg.classList.remove('img-swap');
+            void pimg.offsetWidth;
+            pimg.classList.add('img-swap');
+        }).observe(pimg, { attributes: true, attributeFilter: ['src'] });
+    }
+
+    /* Sepete uçan ürün */
+    function bump() {
+        var badge = document.querySelector('.cart-badge');
+        if (badge && badge.animate) {
+            badge.animate(
+                [{ transform: 'scale(1)' }, { transform: 'scale(1.7)' }, { transform: 'scale(1)' }],
+                { duration: 450, easing: 'ease-out' }
+            );
+        }
+    }
+    document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.add-campaign-btn, #addToCartBtn');
+        if (!btn) return;
+        var cart = document.getElementById('cartBtn');
+        if (!cart || !btn.animate) return;
+        var img = btn.getAttribute('data-image');
+        if (!img && pimg) img = pimg.getAttribute('src');
+        var b = btn.getBoundingClientRect(), k = cart.getBoundingClientRect();
+        var el = document.createElement('div');
+        el.className = 'fly-dot';
+        if (img) el.style.backgroundImage = 'url("' + img + '")';
+        el.style.left = (b.left + b.width / 2 - 27) + 'px';
+        el.style.top = (b.top + b.height / 2 - 27) + 'px';
+        document.body.appendChild(el);
+        var dx = (k.left + k.width / 2) - (b.left + b.width / 2);
+        var dy = (k.top + k.height / 2) - (b.top + b.height / 2);
+        var a = el.animate([
+            { transform: 'translate(0,0) scale(1)', opacity: 1 },
+            { transform: 'translate(' + (dx * 0.45) + 'px,' + (dy * 0.45 - 70) + 'px) scale(0.8)', opacity: 1, offset: 0.45 },
+            { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(0.15)', opacity: 0.5 }
+        ], { duration: 850, easing: 'cubic-bezier(.4,0,.2,1)' });
+        a.onfinish = function () { el.remove(); bump(); };
+    }, true);
+})();
+</script>
+</body></html>
