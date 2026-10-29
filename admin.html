@@ -72,9 +72,9 @@
 
         .btn { background-color: var(--primary); color: var(--accent-light); border: none; padding: 0.35rem 0.7rem; border-radius: 6px; font-weight: 700; font-size: 0.75rem; cursor: pointer; transition: var(--transition); display: inline-block; text-decoration: none; text-align: center; }
         .btn:hover { background-color: var(--primary-dark); }
-        .btn-success { background-color: #27ae60; color: white; width: 100%; padding: 0.4rem; text-align: center; margin-bottom: 0.3rem; }
+        .btn-success { background-color: #27ae60; color: white; width: 100%; padding: 0.4rem; text-align: center; margin-bottom: 0.3rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.75rem; }
         .btn-success:hover { background-color: #1e8449; }
-        .btn-danger { background-color: #a93226; color: white; padding: 0.4rem; font-size: 0.75rem; border-radius: 6px; border: none; cursor: pointer; width: 100%; text-align: center; }
+        .btn-danger { background-color: #a93226; color: white; padding: 0.4rem; font-size: 0.75rem; border-radius: 6px; border: none; cursor: pointer; width: 100%; text-align: center; font-weight: 700; }
         
         .empty-text { color: var(--gray); font-size: 0.85rem; text-align: center; padding: 1rem; }
         input { font-size: 16px !important; background: #fff !important; }
@@ -175,7 +175,7 @@
                             </tr>
                         </thead>
                         <tbody id="customerTableBody">
-                            <!-- JS ile dinamik dolacak -->
+                            <!-- JS ile Firestore'dan dinamik dolacak -->
                         </tbody>
                     </table>
                 </div>
@@ -185,206 +185,265 @@
             <div class="admin-card">
                 <div class="section-title"><i class="fa-solid fa-box-open"></i> Gelen Siparişler & Ödeme Takibi</div>
                 <div id="ordersContainer">
-                    <!-- JS ile dinamik kartlar dolacak -->
-                </div>
-            </div>
-
-            <!-- 2. Müşteri Yorumları -->
-            <div class="admin-card">
-                <div class="section-title"><i class="fa-solid fa-comments"></i> Müşteri Yorumları</div>
-                <div id="reviewsContainer">
-                    <!-- JS ile dinamik yorum kartları dolacak -->
+                    <!-- JS ile Firestore'dan dinamik kartlar dolacak -->
                 </div>
             </div>
 
         </div>
     </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
-  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-  import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyC20egq_Y_zevNuZKwMOnYM14a_z1d9FXk",
-    authDomain: "sahra-kahvesi.firebaseapp.com",
-    projectId: "sahra-kahvesi",
-    storageBucket: "sahra-kahvesi.firebasestorage.app",
-    messagingSenderId: "523862673240",
-    appId: "1:523862673240:web:a46e822a876acb7010872d",
-    measurementId: "G-C3ZTV3NTWW"
-  };
+        const firebaseConfig = {
+            apiKey: "AIzaSyC20egq_Y_zevNuZKwMOnYM14a_z1d9FXk",
+            authDomain: "sahra-kahvesi.firebaseapp.com",
+            projectId: "sahra-kahvesi",
+            storageBucket: "sahra-kahvesi.firebasestorage.app",
+            messagingSenderId: "523862673240",
+            appId: "1:523862673240:web:a46e822a876acb7010872d",
+            measurementId: "G-C3ZTV3NTWW"
+        };
 
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-  window.db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        window.db = getFirestore(app);
 
-  async function loadAdminProduct() {
-      try {
-          const querySnapshot = await getDocs(collection(window.db, "products"));
-          querySnapshot.forEach((documentSnapshot) => {
-              const product = documentSnapshot.data();
-              window.activeProductId = documentSnapshot.id;
+        // 1. Ürün Bilgilerini Yükleme Fonksiyonu
+        async function loadAdminProduct() {
+            try {
+                const querySnapshot = await getDocs(collection(window.db, "products"));
+                querySnapshot.forEach((documentSnapshot) => {
+                    const product = documentSnapshot.data();
+                    window.activeProductId = documentSnapshot.id;
 
-              if(document.getElementById('adminProductName')) {
-                  document.getElementById('adminProductName').value = product.name || "";
-                  document.getElementById('adminPrice250').value = product.price250 || 600;
-                  document.getElementById('adminOriginal250').value = product.original250 || "";
-                  document.getElementById('adminPrice500').value = product.price500 || 1000;
-                  document.getElementById('adminOriginal500').value = product.original500 || "";
-                  document.getElementById('adminPrice1kg').value = product.price1kg || 1700;
-                  document.getElementById('adminOriginal1kg').value = product.original1kg || "";
-                  
-                  // Kampanya fiyatlarını alanlara yükleme
-                  if(document.getElementById('adminCampaign2kg')) {
-                      document.getElementById('adminCampaign2kg').value = product.campaign2kg_price || 2600;
-                  }
-                  if(document.getElementById('adminCampaign3kg')) {
-                      document.getElementById('adminCampaign3kg').value = product.campaign3kg_price || 3600;
-                  }
-              }
-          });
-      } catch (e) {
-          console.error("Ürün verisi yüklenirken hata:", e);
-      }
-  }
-
-  document.getElementById('productUpdateForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!window.activeProductId) {
-          alert("Güncellenecek ürün ID bulunamadı!");
-          return;
-      }
-
-      try {
-          const productRef = doc(window.db, "products", window.activeProductId);
-          await updateDoc(productRef, {
-              name: document.getElementById('adminProductName').value,
-              price250: Number(document.getElementById('adminPrice250').value),
-              original250: document.getElementById('adminOriginal250').value ? document.getElementById('adminOriginal250').value : "",
-              price500: Number(document.getElementById('adminPrice500').value),
-              original500: document.getElementById('adminOriginal500').value ? document.getElementById('adminOriginal500').value : "",
-              price1kg: Number(document.getElementById('adminPrice1kg').value),
-              original1kg: document.getElementById('adminOriginal1kg').value ? document.getElementById('adminOriginal1kg').value : "",
-              campaign2kg_price: Number(document.getElementById('adminCampaign2kg').value),
-              campaign3kg_price: Number(document.getElementById('adminCampaign3kg').value)
-          });
-          alert("Ürün bilgileri ve kampanya fiyatları başarıyla Firestore'a kaydedildi!");
-      } catch (error) {
-          console.error("Güncelleme hatası:", error);
-          alert("Güncellenirken bir hata oluştu.");
-      }
-  });
-
-  loadAdminProduct();
-
-  document.getElementById('logoutBtn').addEventListener('click', async () => {
-      try {
-          await signOut(auth);
-          window.location.href = "admin-login.html";
-      } catch (error) {
-          console.error("Çıkış yapılırken hata:", error);
-      }
-  });
-</script>
-
-    <script>
-        function loadOrders() {
-            let orders = JSON.parse(localStorage.getItem('sahra_orders')) || [];
-            const container = document.getElementById('ordersContainer');
-            container.innerHTML = "";
-
-            if (orders.length === 0) {
-                container.innerHTML = `<div class="empty-text">Henüz gelen sipariş bulunmuyor.</div>`;
-                return;
+                    if(document.getElementById('adminProductName')) {
+                        document.getElementById('adminProductName').value = product.name || "";
+                        document.getElementById('adminPrice250').value = product.price250 || 600;
+                        document.getElementById('adminOriginal250').value = product.original250 || "";
+                        document.getElementById('adminPrice500').value = product.price500 || 1000;
+                        document.getElementById('adminOriginal500').value = product.original500 || "";
+                        document.getElementById('adminPrice1kg').value = product.price1kg || 1700;
+                        document.getElementById('adminOriginal1kg').value = product.original1kg || "";
+                        
+                        if(document.getElementById('adminCampaign2kg')) {
+                            document.getElementById('adminCampaign2kg').value = product.campaign2kg_price || 2600;
+                        }
+                        if(document.getElementById('adminCampaign3kg')) {
+                            document.getElementById('adminCampaign3kg').value = product.campaign3kg_price || 3600;
+                        }
+                    }
+                });
+            } catch (e) {
+                console.error("Ürün verisi yüklenirken hata:", e);
             }
+        }
 
-            orders.forEach((order, index) => {
-                let itemsHtml = "";
-                if (order.items && order.items.length > 0) {
-                    itemsHtml = order.items.map(i => `<div style="margin-bottom:0.2rem;">• <strong>${i.name}</strong> (${i.weight || 'Standart'}) x ${i.quantity || i.qty || 1}</div>`).join('');
-                } else {
-                    itemsHtml = `<div style="color:var(--gray);">Ürün içeriği belirtilmedi</div>`;
+        // Ürün Güncelleme Form Olayı
+        const productUpdateForm = document.getElementById('productUpdateForm');
+        if(productUpdateForm) {
+            productUpdateForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!window.activeProductId) {
+                    alert("Güncellenecek ürün ID bulunamadı!");
+                    return;
                 }
 
-                const paymentMethod = order.paymentMethod || 'Kredi Kartı';
-                const orderStatus = order.status || 'Ödeme Başarılı';
-                const isPending = orderStatus === 'Havale Bekleniyor';
-                const badgeClass = isPending ? 'pending' : 'success';
-
-                const fullCity = order.city ? `<strong>${order.city}</strong> - ` : '';
-                const fullAddress = fullCity + (order.address || 'Belirtilmedi');
-
-                container.innerHTML += `
-                    <div class="list-card-item">
-                        <div class="card-row">
-                            <div>
-                                <strong style="font-size:0.9rem; color:var(--primary);">${order.name || 'Müşteri'}</strong><br>
-                                <span style="color:var(--gray); font-size:0.75rem;"><i class="fa-solid fa-phone"></i> ${order.phone || ''}</span>
-                            </div>
-                            <div style="text-align: right;">
-                                <strong style="font-size:0.95rem; color:var(--primary);">${order.total || '₺1.700,00'}</strong><br>
-                                <span style="font-size:0.72rem; font-weight:600; display:block; margin-top:2px;">${paymentMethod}</span>
-                                <span class="badge ${badgeClass}" style="margin-top:2px;">${orderStatus}</span>
-                            </div>
-                        </div>
-
-                        <div class="card-row" style="flex-direction: column; gap: 0.2rem;">
-                            <span style="font-weight:700; color:var(--primary); font-size:0.78rem;"><i class="fa-solid fa-box"></i> Ürünler:</span>
-                            <div style="font-size:0.78rem; padding-left:0.3rem;">${itemsHtml}</div>
-                        </div>
-
-                        <div class="card-row" style="flex-direction: column; gap: 0.1rem; background: rgba(74, 55, 44, 0.05); padding: 0.4rem; border-radius: 6px;">
-                            <span style="font-weight:700; color:var(--primary); font-size:0.78rem;"><i class="fa-solid fa-location-dot"></i> Adres:</span>
-                            <span style="font-size:0.78rem; color:var(--text-dark);">${fullAddress}</span>
-                        </div>
-
-                        <div style="margin-top: 0.2rem;">
-                            ${isPending ? `<button class="btn btn-success" onclick="approvePayment(${index})"><i class="fa-solid fa-check"></i> Ödemeyi Onayla</button>` : ''}
-                            <button class="btn-danger" onclick="deleteOrder(${index})"><i class="fa-solid fa-trash"></i> Siparişi Sil</button>
-                        </div>
-                    </div>
-                `;
+                try {
+                    const productRef = doc(window.db, "products", window.activeProductId);
+                    await updateDoc(productRef, {
+                        name: document.getElementById('adminProductName').value,
+                        price250: Number(document.getElementById('adminPrice250').value),
+                        original250: document.getElementById('adminOriginal250').value || "",
+                        price500: Number(document.getElementById('adminPrice500').value),
+                        original500: document.getElementById('adminOriginal500').value || "",
+                        price1kg: Number(document.getElementById('adminPrice1kg').value),
+                        original1kg: document.getElementById('adminOriginal1kg').value || "",
+                        campaign2kg_price: Number(document.getElementById('adminCampaign2kg').value),
+                        campaign3kg_price: Number(document.getElementById('adminCampaign3kg').value)
+                    });
+                    alert("Ürün bilgileri başarıyla Firestore'a kaydedildi!");
+                } catch (error) {
+                    console.error("Güncelleme hatası:", error);
+                    alert("Güncellenirken bir hata oluştu.");
+                }
             });
         }
 
-        function loadCustomerContacts() {
-            let orders = JSON.parse(localStorage.getItem('sahra_orders')) || [];
+        // 2. Firestore "musteri" Koleksiyonundan Siparişleri Çek ve Listele
+        async function loadOrdersFromFirestore() {
+            const container = document.getElementById('ordersContainer');
             const tbody = document.getElementById('customerTableBody');
-            if(!tbody) return;
-            
-            tbody.innerHTML = "";
-            let customersList = [];
+            if (!container) return;
 
-            if (orders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="empty-text">Henüz kayıtlı müşteri bilgisi yok.</td></tr>`;
-                return;
+            container.innerHTML = `<div class="empty-text">Siparişler yükleniyor...</div>`;
+
+            try {
+                const querySnapshot = await getDocs(collection(window.db, "musteri"));
+                container.innerHTML = "";
+                if(tbody) tbody.innerHTML = "";
+
+                if (querySnapshot.empty) {
+                    container.innerHTML = `<div class="empty-text">Henüz gelen sipariş bulunmuyor.</div>`;
+                    if(tbody) tbody.innerHTML = `<tr><td colspan="3" class="empty-text">Henüz kayıtlı müşteri bilgisi yok.</td></tr>`;
+                    return;
+                }
+
+                let customersHtml = "";
+
+                querySnapshot.forEach((documentSnapshot) => {
+                    const order = documentSnapshot.data();
+                    const orderId = documentSnapshot.id;
+
+                    let itemsHtml = "";
+                    if (order.items && order.items.length > 0) {
+                        itemsHtml = order.items.map(i => `<div style="margin-bottom:0.2rem;">• <strong>${i.name || i.urunAdi || 'Ürün'}</strong> (${i.weight || i.gramaj || 'Standart'}) x ${i.quantity || i.qty || 1}</div>`).join('');
+                    } else {
+                        itemsHtml = `<div style="color:var(--gray);">Ürün içeriği belirtilmedi</div>`;
+                    }
+
+                    const paymentMethod = order.paymentMethod || 'IBAN / Havale';
+                    const orderStatus = order.status || 'Havale Bekleniyor';
+                    const isPending = orderStatus === 'Havale Bekleniyor';
+                    const badgeClass = isPending ? 'pending' : 'success';
+
+                    const fullCity = order.city ? `<strong>${order.city}</strong> - ` : '';
+                    const fullAddress = fullCity + (order.address || 'Belirtilmedi');
+
+                    // Sipariş Kartı
+                    container.innerHTML += `
+                        <div class="list-card-item" id="order-${orderId}">
+                            <div class="card-row">
+                                <div>
+                                    <strong style="font-size:0.9rem; color:var(--primary);">${order.name || 'Müşteri'}</strong><br>
+                                    <span style="color:var(--gray); font-size:0.75rem;"><i class="fa-solid fa-phone"></i> ${order.phone || ''}</span>
+                                </div>
+                                <div style="text-align: right;">
+                                    <strong style="font-size:0.95rem; color:var(--primary);">${order.total || '₺1.700,00'}</strong><br>
+                                    <span style="font-size:0.72rem; font-weight:600; display:block; margin-top:2px;">${paymentMethod}</span>
+                                    <span class="badge ${badgeClass}" style="margin-top:2px;">${orderStatus}</span>
+                                </div>
+                            </div>
+
+                            <div class="card-row" style="flex-direction: column; gap: 0.2rem;">
+                                <span style="font-weight:700; color:var(--primary); font-size:0.78rem;"><i class="fa-solid fa-box"></i> Ürünler:</span>
+                                <div style="font-size:0.78rem; padding-left:0.3rem;">${itemsHtml}</div>
+                            </div>
+
+                            <div class="card-row" style="flex-direction: column; gap: 0.1rem; background: rgba(74, 55, 44, 0.05); padding: 0.4rem; border-radius: 6px;">
+                                <span style="font-weight:700; color:var(--primary); font-size:0.78rem;"><i class="fa-solid fa-location-dot"></i> Adres:</span>
+                                <span style="font-size:0.78rem; color:var(--text-dark);">${fullAddress}</span>
+                            </div>
+
+                            <div style="margin-top: 0.2rem;">
+                                ${isPending ? `<button class="btn-success" onclick="approveOrder('${orderId}')"><i class="fa-solid fa-check"></i> Ödemeyi Onayla</button>` : ''}
+                                <button class="btn-danger" onclick="deleteFirestoreOrder('${orderId}')"><i class="fa-solid fa-trash"></i> Siparişi Sil</button>
+                            </div>
+                        </div>
+                    `;
+
+                    // Müşteri Tablo Satırı
+                    if(tbody) {
+                        customersHtml += `
+                            <tr style="border-bottom: 1px dashed rgba(74, 55, 44, 0.2);">
+                                <td style="padding: 0.4rem;">${order.name || 'Belirtilmemiş'}</td>
+                                <td style="padding: 0.4rem;">${order.phone || 'Belirtilmemiş'}</td>
+                                <td style="padding: 0.4rem;">${order.email || 'Belirtilmemiş'}</td>
+                            </tr>
+                        `;
+                    }
+                });
+
+                if(tbody && customersHtml !== "") {
+                    tbody.innerHTML = customersHtml;
+                }
+
+            } catch (err) {
+                console.error("Siparişler yüklenirken hata:", err);
+                container.innerHTML = `<div class="empty-text" style="color: red;">Siparişler yüklenemedi: ${err.message}</div>`;
             }
+        }
 
-            orders.forEach(order => {
-                let customer = {
-                    name: order.name || 'Belirtilmemiş',
-                    phone: order.phone || 'Belirtilmemiş',
-                    email: order.email || 'Belirtilmemiş'
-                };
-                
-                customersList.push(customer);
+        // Ödeme Onaylama Fonksiyonu
+        window.approveOrder = async function(orderId) {
+            try {
+                const orderRef = doc(window.db, "musteri", orderId);
+                await updateDoc(orderRef, { status: "Ödeme Başarılı" });
+                alert("Ödeme onaylandı!");
+                loadOrdersFromFirestore();
+            } catch (err) {
+                console.error("Onay hatası:", err);
+                alert("İşlem başarısız oldu.");
+            }
+        };
 
-                tbody.innerHTML += `
-                    <tr style="border-bottom: 1px dashed rgba(74, 55, 44, 0.2);">
-                        <td style="padding: 0.4rem;">${customer.name}</td>
-                        <td style="padding: 0.4rem;">${customer.phone}</td>
-                        <td style="padding: 0.4rem;">${customer.email}</td>
-                    </tr>
-                `;
+        // Sipariş Silme Fonksiyonu
+        window.deleteFirestoreOrder = async function(orderId) {
+            if(confirm("Bu siparişi silmek istediğinize emin misiniz?")) {
+                try {
+                    await deleteDoc(doc(window.db, "musteri", orderId));
+                    alert("Sipariş silindi.");
+                    loadOrdersFromFirestore();
+                } catch (err) {
+                    console.error("Silme hatası:", err);
+                    alert("Silinirken bir hata oluştu.");
+                }
+            }
+        };
+
+        // Excel / CSV İndirme
+        const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+        if(downloadCsvBtn) {
+            downloadCsvBtn.addEventListener('click', async () => {
+                try {
+                    const querySnapshot = await getDocs(collection(window.db, "musteri"));
+                    if (querySnapshot.empty) {
+                        alert("İndirilecek müşteri verisi yok!");
+                        return;
+                    }
+
+                    let csvContent = "data:text/csv;charset=utf-8,Ad Soyad,Telefon,E-posta\r\n";
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        let row = `"${data.name || ''}","${data.phone || ''}","${data.email || ''}"`;
+                        csvContent += row + "\r\n";
+                    });
+
+                    const encodedUri = encodeURI(csvContent);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", encodedUri);
+                    link.setAttribute("download", "sahra_musteriler.csv");
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } catch (err) {
+                    console.error("CSV indirme hatası:", err);
+                    alert("Excel dosyası oluşturulamadı.");
+                }
             });
         }
 
+        // Çıkış Butonu
+        const logoutBtn = document.getElementById('logoutBtn');
+        if(logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+                try {
+                    await signOut(auth);
+                    window.location.href = "admin-login.html";
+                } catch (error) {
+                    console.error("Çıkış yapılırken hata:", error);
+                }
+            });
+        }
+
+        // Sayfa Hazır Olduğunda Çağır
         document.addEventListener("DOMContentLoaded", () => {
-            loadOrders();
-            loadCustomerContacts();
+            loadAdminProduct();
+            loadOrdersFromFirestore();
         });
     </script>
 </body>
