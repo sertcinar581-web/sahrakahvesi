@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kahvenin Kraliçesi Kakule | Sahra Kahvesi Blog</title>
+    <meta name="description" content="Baharatların kraliçesi kakulenin şeker dengesi, tansiyon, migren, ağız kokusu, yağ yakıcı gücü ve kalp/sindirim sağlığına mucizevi faydaları.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        /* Hareket azaltma tercihi yoksa kaydırma animasyonlarını etkinleştir */
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('js');
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #1a100c;
+            color: #f5f0eb;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Üst Menü */
+        .site-header {
+            background-color: #26160e;
+            border-bottom: 1px solid #3a2213;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .logo-area img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #c89d5c;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #dcd6d0;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #c89d5c;
+        }
+
+        /* Sayfa İçeriği */
+        .blog-post-container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .blog-header .badge {
+            display: inline-block;
+            background-color: rgba(200, 157, 92, 0.15);
+            border: 1px solid #c89d5c;
+            color: #c89d5c;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .blog-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: #f5f0eb;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .blog-meta {
+            font-size: 0.9rem;
+            color: #c89d5c;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-weight: 500;
+        }
+
+        /* Responsive Blog Görsel Alanı */
+        .blog-featured-image {
+            width: 100%;
+            height: 450px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #3a2213;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .blog-featured-image picture,
+        .blog-featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .blog-body {
+            background-color: #26160e;
+            border: 1px solid #3a2213;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .blog-body h2 {
+            font-family: 'Playfair Display', serif;
+            color: #c89d5c;
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-body p {
+            color: #dcd6d0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-quote {
+            border-left: 4px solid #c89d5c;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #f5f0eb;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            line-height: 1.6;
+            background: rgba(200, 157, 92, 0.05);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box {
+            background: rgba(200, 157, 92, 0.1);
+            border: 1px solid rgba(200, 157, 92, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .highlight-box h3 {
+            color: #c89d5c;
+            font-family: 'Playfair Display', serif;
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
+
+        .highlight-box ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #dcd6d0;
+        }
+
+        .highlight-box li {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+
+              /* Mobil İçin Görsel Alanı Düzeltmesi */
+        @media (max-width: 768px) {
+            .site-header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin: 0;
+            }
+            .blog-body {
+                padding: 1.5rem;
+            }
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+            
+            /* Görselin Kırpılmasını Önleyen Kod */
+            .blog-featured-image {
+                height: auto !important; /* Sabit 300px yüksekliği kaldırır */
+                max-height: 500px; /* Çok fazla uzamasını engeller */
+            }
+
+            .blog-featured-image picture,
+            .blog-featured-image img {
+                height: auto !important;
+                object-fit: contain; /* Görseli kırmadan tamamını sığdırır */
+            }
+        }
+
+    
+        /* ================= ANİMASYONLAR ================= */
+
+        /* Okuma ilerleme çubuğu */
+        .read-progress {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #8c5830, #c89d5c, #e2b878);
+            transform-origin: left center;
+            transform: scaleX(0);
+            z-index: 1100;
+            pointer-events: none;
+        }
+
+        /* Arka planda süzülen altın tozu */
+        #dust {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .blog-post-container { position: relative; z-index: 1; }
+
+        /* Açılış sırası */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(26px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-100%); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(200, 157, 92, 0); }
+            50%      { box-shadow: 0 0 20px 2px rgba(200, 157, 92, 0.35); }
+        }
+        @keyframes imageReveal {
+            from { opacity: 0; clip-path: inset(10% 10% 10% 10% round 16px); transform: translateY(30px); }
+            to   { opacity: 1; clip-path: inset(0 0 0 0 round 16px); transform: translateY(0); }
+        }
+        @keyframes imageZoom {
+            from { transform: scale(1.15); }
+            to   { transform: scale(1); }
+        }
+        @keyframes itemIn {
+            from { opacity: 0; transform: translateX(-18px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .site-header { animation: slideDown 0.8s cubic-bezier(.2,.7,.2,1) both; }
+        .blog-header .badge { animation: fadeUp 0.8s 0.25s cubic-bezier(.2,.7,.2,1) both, glow 3.5s 1.3s ease-in-out infinite; }
+        .blog-header h1 { animation: fadeUp 0.9s 0.45s cubic-bezier(.2,.7,.2,1) both; }
+        .blog-meta { animation: fadeUp 0.9s 0.65s cubic-bezier(.2,.7,.2,1) both; }
+        .blog-featured-image { animation: imageReveal 1.2s 0.8s cubic-bezier(.2,.7,.2,1) both; }
+        .blog-featured-image img { animation: imageZoom 2.4s 0.8s cubic-bezier(.2,.7,.2,1) both; }
+
+        /* Menü bağlantılarında kayan alt çizgi */
+        .nav-links a { position: relative; padding-bottom: 4px; }
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 100%; height: 1px;
+            background: #c89d5c;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+
+        /* Başlıkların altında çizilen çizgi */
+        .blog-body h2 { position: relative; padding-bottom: 0.7rem; }
+        .blog-body h2::after {
+            content: "";
+            position: absolute;
+            left: 0; bottom: 0;
+            height: 2px; width: 64px;
+            background: linear-gradient(90deg, #c89d5c, transparent);
+            transition: width 1s 0.3s ease;
+        }
+        .js .blog-body h2:not(.in)::after { width: 0; }
+
+        /* Kaydırınca belirme */
+        .blog-body > p, .blog-body > h2, .blog-quote, .highlight-box {
+            transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+        }
+        .js .blog-body > p:not(.in),
+        .js .blog-body > h2:not(.in),
+        .js .highlight-box:not(.in) {
+            opacity: 0;
+            transform: translateY(28px);
+        }
+        .js .blog-quote:not(.in) {
+            opacity: 0;
+            transform: translateX(-32px);
+        }
+
+        /* Madde işaretleri sırayla gelir */
+        .js .highlight-box:not(.in) li { opacity: 0; }
+        .highlight-box.in li { animation: itemIn 0.7s cubic-bezier(.2,.7,.2,1) backwards; }
+        .highlight-box.in li:nth-child(1) { animation-delay: 0.15s; }
+        .highlight-box.in li:nth-child(2) { animation-delay: 0.3s; }
+        .highlight-box.in li:nth-child(3) { animation-delay: 0.45s; }
+        .highlight-box.in li:nth-child(4) { animation-delay: 0.6s; }
+        .highlight-box.in li:nth-child(5) { animation-delay: 0.75s; }
+        .highlight-box.in li:nth-child(6) { animation-delay: 0.9s; }
+        .highlight-box.in li:nth-child(7) { animation-delay: 1.05s; }
+
+        .highlight-box li { transition: transform 0.3s ease; }
+        .highlight-box li:hover { transform: translateX(8px); }
+        .highlight-box li strong { transition: color 0.3s ease; }
+        .highlight-box li:hover strong { color: #e2b878; }
+
+        /* Kutu ve görsel üzerine gelince hafif yükselme */
+        .highlight-box:hover { box-shadow: 0 12px 30px rgba(200, 157, 92, 0.12); }
+        .blog-featured-image img { transition: filter 0.5s ease; }
+        .blog-featured-image:hover img { filter: brightness(1.08); }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+            #dust { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="read-progress" aria-hidden="true"></div>
+    <canvas id="dust" aria-hidden="true"></canvas>
+
+    <!-- Üst Menü -->
+    <header class="site-header">
+        <a href="index.html" class="logo-area">
+            <img src="logo1.jpg" alt="Sahra Kahvesi Logo">
+            <span>SAHRA KAHVESİ</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#hikaye">Hikayemiz</a></li>
+            <li><a href="index.html#urun">Ürün</a></li>
+            <li><a href="index.html#rehber">Demleme</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="subeler.html">Şubelerimiz</a></li>
+            <li><a href="index.html#yorumlar">Yorumlar</a></li>
+            <li><a href="index.html#sss">S.S.S.</a></li>
+        </ul>
+    </header>
+
+    <!-- Blog İçerik Alanı -->
+    <article class="blog-post-container">
+        <div class="blog-header">
+            <span class="badge">👑 Baharatların Kraliçesi</span>
+            <h1>Fincanların Gizli Hazinesi: Kakulenin Büyüleyici ve Mucizevi Gücü</h1>
+            <div class="blog-meta">
+                <span><i class="fa-regular fa-calendar"></i> 14 Ekim 2026</span>
+                <span><i class="fa-regular fa-clock"></i> 5 dk okuma</span>
+                <span><i class="fa-solid fa-pen-nib"></i> Sahra Kahvesi Uzman Ekibi</span>
+            </div>
+        </div>
+
+        <!-- Mobil & PC Ayrımı Yapan Esnek Kapak Görseli -->
+        <div class="blog-featured-image">
+            <picture>
+                <!-- Mobil Ekranlar İçin Görsel (Max 768px) -->
+                <source media="(max-width: 768px)" srcset="fotoaa-mobil.png">
+                <!-- PC / Masaüstü Ekranlar İçin Görsel (769px ve üzeri) -->
+                <source media="(min-width: 769px)" srcset="fotoaa-pc.jpg">
+                <!-- Varsayılan Görsel -->
+                <img src="fotoaa-pc.jpg" alt="Kakule ve Kahve Harmonisi - Sahra Kahvesi">
+            </picture>
+        </div>
+
+        <div class="blog-body">
+            <p>Baharatlar dünyasında bazı tatlar vardır ki, sadece bir aroma verici olmanın çok ötesine geçerek girdikleri her şeyi adeta sanatsal bir başyapıta dönüştürürler. İşte <strong>kakule</strong>, tam da bu seçkin ve ulaşılamaz zirvenin ta kendisidir. "Baharatların Kraliçesi" unvanını ardına kadar hak eden bu eşsiz mucize, bin yıldır sarayların, doğunun en köklü kültürlerinin ve şimdi de Sahra Kahvesi’nin vazgeçilmez imza dokunuşudur.</p>
+
+            <div class="blog-quote">
+                "Kakule sıradan bir kahveyi alıp, onu ruhunuza, bedeninize ve sağlığınıza hitap eden mistik bir saray iksirine dönüştüren tek ve yegâne anahtardır."
+            </div>
+
+            <h2>Neden Kakule? Onu Bu Kadar Eşsiz Kılan Nedir?</h2>
+            <p>Kakule; zencefilgiller ailesinin en asil, en aromatik ve en değerli üyesidir. İçerdiği yoğun ve ferahlatıcı uçucu yağlar sayesinde, kahve çekirdeğiyle buluştuğu an ortaya adeta duyusal bir şölen çıkar. Sıradan kahve deneyimlerinden sıkılanlar için kakule, yudumladığınız ilk andan itibaren damakta bıraktığı o kadifemsi, hafif tatlımsı ve ferahlatıcı izle adeta bağımlılık yaratır.</p>
+
+            <p>Sadece tadıyla değil, doğanın sunduğu en büyük şifa kaynaklarından biri olmasıyla da bilinir. Kan şekerini dengede tutmaktan tansiyonu düzene sokmaya, migren ağrılarını hafifletmekten ağız kokusunu yok etmeye kadar sınır tanımayan bir güce sahiptir.</p>
+
+            <div class="highlight-box">
+                <h3>Sahra Kahvesi Harmanında Kakulenin Muazzam Gücü</h3>
+                <ul>
+                    <li><strong>Kan Şekeri ve Diyabet Desteği:</strong> Vücuttaki glikoz metabolizmasını destekleyerek kan şekerinin dengelenmesine yardımcı olur, insülin direncine karşı doğal bir kalkan oluşturur.</li>
+                    <li><strong>Tansiyon Dengesi ve Damar Sağlığı:</strong> İçerdiği yüksek potasyum ve magnezyum mineralleri sayesinde kan basıncını (tansiyonu) dengeleyerek kalp ve damar sistemine mükemmel bir koruma kalkanı sağlar.</li>
+                    <li><strong>Migren ve Baş Ağrısı Düşmanı:</strong> Güçlü antioksidan ve yatıştırıcı özellikleri sayesinde sinir sistemini rahatlatır, migren ve inatçı baş ağrılarının hafiflemesine destek sağlar.</li>
+                    <li><strong>Kusursuz Nefes ve Ağız Kokusu Çözümü:</strong> Doğal antibakteriyel yapısı sayesinde ağızdaki bakterileri etkisiz hale getirerek gün boyu taze, tertemiz ve mis kokulu bir nefes sunar.</li>
+                    <li><strong>Güçlü Yağ Yakıcı Etki:</strong> Metabolizmayı hızlandırıcı ve termojenik özellikleriyle vücuttaki yağ yakımını zirveye taşır, formda kalmanızı sağlar.</li>
+                    <li><strong>Kalp ve Sindirim Sistemi Dostu:</strong> Kan dolaşımını düzenleyerek kalbi korur; şişkinlik, hazımsızlık ve sindirim problemlerini anında bertaraf eder.</li>
+                    <li><strong>Saf ve Katkısız:</strong> Sahra Kahvesi olarak hiçbir yapay aroma kullanmadan, en kaliteli kakule tanelerini özenle seçip kahvemizin kalbine işliyoruz.</li>
+                </ul>
+            </div>
+
+            <h2>Sahra Kahvesi ve Kakulenin Kusursuz Harmanı</h2>
+            <p>Biz Sahra Kahvesi'ni tasarlarken amacımız sadece kahve satmak değil; kullanıcımıza her fincanda unutulmaz bir deneyim, kusursuz bir asalet ve üst düzey bir sağlık sunmaktı. İşte bu yüzden formülümüzün başrolünü kakuleye verdik. En nitelikli Arabika çekirdeklerinin menengiçle olan o toprak kokulu kucaklaşmasını, kakulenin o muazzam şifası ve ferahlığıyla taçlandırdık.</p>
+
+            <p>Eğer bugüne kadar Sahra Kahvesi'ni kakule dokunuşuyla denemediyseniz, aslında kahve dünyasının hem en büyük lezzet sırrından hem de en büyük şifa kaynağından hala mahrumsunuz demektir. Bir fincan Sahra Kahvesi demleyin; gözlerinizi kapatın ve kakulenin o eşsiz rayihasının bedeninizi ve ruhunuzu yenilemesine izin verin. Vazgeçemeyeceksiniz!</p>
+        </div>
+    </article>
+
+<script>
+(function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* Okuma ilerleme çubuğu */
+    var bar = document.querySelector('.read-progress');
+    function onScroll() {
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        var p = h > 0 ? window.scrollY / h : 0;
+        bar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, p)) + ')';
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    if (reduce) return;
+
+    /* Kaydırınca belirme */
+    var targets = document.querySelectorAll('.blog-body > p, .blog-body > h2, .blog-quote, .highlight-box');
+    if (!('IntersectionObserver' in window)) {
+        targets.forEach(function (t) { t.classList.add('in'); });
+    } else {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('in');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        targets.forEach(function (t) { io.observe(t); });
+    }
+
+    /* Süzülen altın tozu */
+    var c = document.getElementById('dust');
+    var x = c.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W, H, P = [];
+    function size() {
+        W = window.innerWidth; H = window.innerHeight;
+        c.width = W * dpr; c.height = H * dpr;
+        x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function make(initial) {
+        return {
+            x: Math.random() * W,
+            y: initial ? Math.random() * H : H + 10,
+            r: Math.random() * 1.8 + 0.6,
+            v: Math.random() * 0.35 + 0.12,
+            s: Math.random() * Math.PI * 2,
+            a: Math.random() * 0.35 + 0.12
+        };
+    }
+    size();
+    var n = Math.round(Math.min(46, W / 28));
+    for (var i = 0; i < n; i++) P.push(make(true));
+    window.addEventListener('resize', size);
+    function tick() {
+        x.clearRect(0, 0, W, H);
+        for (var i = 0; i < P.length; i++) {
+            var p = P[i];
+            p.y -= p.v;
+            p.s += 0.01;
+            x.beginPath();
+            x.arc(p.x + Math.sin(p.s) * 14, p.y, p.r, 0, 6.283);
+            x.fillStyle = 'rgba(200,157,92,' + p.a + ')';
+            x.fill();
+            if (p.y < -10) P[i] = make(false);
+        }
+        requestAnimationFrame(tick);
+    }
+    tick();
+})();
+</script>
+</body>
+</html>
